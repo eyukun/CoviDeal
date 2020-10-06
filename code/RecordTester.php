@@ -6,7 +6,7 @@ Student ID: B1802197
 <!DOCTYPE html>
  <html lang="en">
  <head>
-    
+     <!--link for boostrap!-->
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -80,7 +80,7 @@ Student ID: B1802197
 		<br>
 		<div class="container">
 		<h1 class="title">Record Tester</h1><br><br>
-		
+		 <!--form to add new tester!-->
 		<form action="common.php" method="post">
 			<div>
 				<div>
@@ -127,6 +127,7 @@ Student ID: B1802197
 								</div>
 							</div>
 						</div>
+						 <!--go to common.php to record new tester!-->
 						<div class="modal-footer">
 							<input name="action_name" value ="record_tester" hidden>
 							<input type="submit" class="btn btn-primary" name="submit" value="Add" >

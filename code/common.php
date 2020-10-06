@@ -371,6 +371,10 @@ function updatePatient()
 		
 		
 		if ($user != null){
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Test added Successfully!</strong></div>';
+			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
 		}
 		else {
@@ -461,6 +465,10 @@ function recordPatient(){
 		$new_test_id = db_insert($create_test_id_sql);
 		
 		if ($user == null){
+				$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Test added Successfully!</strong></div>';
+			$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 		}
 		else {

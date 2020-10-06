@@ -6,7 +6,7 @@ Student ID: B1802197
 <!DOCTYPE html>
  <html lang="en">
  <head>
-    
+    <!--link for boostrap!-->
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -88,7 +88,14 @@ Student ID: B1802197
 		
 	 </div>
 	 </hr>
-	
+	<div class="form-group">
+		<div class="col-lg-12">
+			<?php
+			if (isset($_SESSION['error'])) {
+				echo $_SESSION['error'];
+				unset($_SESSION['error']);} ?>
+		</div>
+	</div>
 	<!-- display the list of test kit !-->
 	<?php
 	//connect to mysql
@@ -110,7 +117,7 @@ Student ID: B1802197
 		?>
 		<h5>Test Table</h5>
 		<form action="FindPatient.php">
-		<!-- list of all patient !-->
+		<!-- table of new test !-->
 		<table class="table table-borderless" id="testTable">
 			  <thead>
 				<tr class="thead-dark">
@@ -125,6 +132,7 @@ Student ID: B1802197
 				</tr>
 			  </thead>
 			  <tbody>
+			   <!--while loop for patient details!-->
 			  <?php
 			  while($row = mysqli_fetch_array($resultset)):
 			  ?>
@@ -155,6 +163,7 @@ Student ID: B1802197
           </div>
 
           <div class="col-md-4 col-sm-6 col-xs-12">
+		   <!--link for footer!-->
             <ul class="social-icons">
               <li><a class="button" target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
               <li><a class="button" target="_blank" href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>

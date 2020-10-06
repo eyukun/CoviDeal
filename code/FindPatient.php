@@ -6,7 +6,7 @@ Student ID: B1802197
 <!DOCTYPE html>
  <html lang="en">
  <head>
-    
+     <!--link for boostrap!-->
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,6 +20,7 @@ Student ID: B1802197
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/manageTestKit.js"></script>
+	 <!--java script!-->
 	<script>
 		function searchPatient() {
 		  var input, filter, table, tr, td, i, txtValue;
@@ -97,6 +98,7 @@ Student ID: B1802197
 	 </div>
 	 </hr>
 	<div class="form-group">
+	 <!--error message!-->
 		<div class="col-lg-12">
 			<?php
 			if (isset($_SESSION['error'])) {
@@ -118,6 +120,7 @@ Student ID: B1802197
 		$conn->query($userTable);
 	    $sql = "SELECT * FROM user where position='patient'";
 		
+		//testkit table
 		$check = new mysqli("localhost","root","", "covideal");
 		if ($check->connect_error){
 			die("Connection failure: " . mysqli_connect_error());
@@ -157,6 +160,7 @@ Student ID: B1802197
 				</tr>
 			  </thead>
 			  <tbody>
+			   <!--table for patient details!-->
 			  <?php
 			  while($row = mysqli_fetch_array($resultset)):
 			  ?>
@@ -231,6 +235,7 @@ Student ID: B1802197
 									</div>
 								</div>
 								<div class="modal-footer">
+								 <!--submit and go to common.php!-->
 									<input name="action_name" value="updatePatient" hidden>
 									<input type="submit" class="btn btn-primary" name="submit" value="Update">
 								</div>
@@ -244,6 +249,7 @@ Student ID: B1802197
 		<?php } ?>
 			<br><br>
 			<div>
+			 <!--button for register new patient!-->
 				  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
 				  data-target="#recordPatientModal"> Register </button>
 			</div>
@@ -324,6 +330,7 @@ Student ID: B1802197
 										</div>
 								</div>
 							</div>
+							 <!--go to common.php!-->
 							<div class="modal-footer">
 								<input name="action_name" value="recordPatient" hidden>
 								<input type="submit" class="btn btn-primary" name="submit" value="Register">
