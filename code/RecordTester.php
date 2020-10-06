@@ -11,7 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/recordTester.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -33,39 +33,27 @@ Student ID: B1802197
 			 <li class="nav-item pill-1">
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
-			 
-		<li class="nav-item pill-2">
+         <li class="nav-item pill-2">
              <a 
-			 <?php if(isset($_SESSION['centreID']) != null){ ?> href="#" title="You are owning a test centre currently !" 
-			 class="nav-link active text-secondary"
-			 <?php }
+			 <?php if(isset($_SESSION['centreID']) != null){ ?> class="nav-link text-secondary" 
+			 href="#" title="You are owning a test centre currently !" <?php }
 			else { ?> class="nav-link" href="RegisterTestCentre.php" <?php } ?>
 			 >Register Centre</a>
          </li>
 		
          <li class="nav-item pill-3">
-             <a 
-			 <?php if(isset($_SESSION['centreID']) == null){ ?> href="#" title="Please register a test centre first !" 
-			 class="nav-link text-secondary"
-			 <?php }
-			 else { ?> class="nav-link-active" href="RecordTester.php" <?php } ?>
+             <a
+			 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
+			 href="#" title="Please register a test centre first !" <?php }
+			 else { ?> class="nav-link active" href="RecordTester.php" <?php } ?>
 			 >Record Tester</a>
          </li>
 		 <li class="nav-item pill-4">
-             <a 
-			 <?php if(isset($_SESSION['centreID']) == null){ ?> href="#" title="Please register a test centre first !" 
-			 class="nav-link text-secondary"
-			 <?php } 
-			 else { ?> class="nav-link" href="ManageTestKit.php" <?php } ?>
+             <a
+			 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
+			 href="#" title="Please register a test centre first !" <?php } 
+			 else { ?> class="nav-link " href="ManageTestKit.php" <?php } ?>
 			 >Manage Test Kit Stock</a>
-         </li>
-		 <li class="nav-item pill-5">
-             <a 
-			 <?php if(isset($_SESSION['centreID']) == null){ ?> href="#" title="Please register a test centre first !" 
-			 class="nav-link text-secondary"
-			 <?php } 
-			 else { ?> class="nav-link text-light" href="GenerateTestReport.php" <?php } ?>
-			 >Generate Test Report</a>
          </li>
  	   </ul>
  			
