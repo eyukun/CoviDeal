@@ -110,7 +110,7 @@ Student ID: B1802197
 
 								<label for="password" class="col-sm-6 col-lg-12 col-form-label"> Password</label>
 								<div class="col-sm-12 col-lg-8">
-									<input type="password" class="form-control" name="password" 
+									<input type="password" class="form-control" name="password" pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
 									minlength="8"
 									maxlength = "20"
 									placeholder="Password" required>
