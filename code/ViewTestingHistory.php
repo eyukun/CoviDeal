@@ -1,6 +1,6 @@
 <!--
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->
 <?php
 	require_once("common.php");
@@ -42,7 +42,7 @@ Student ID: B1802197
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
 		 <li class="nav-item pill-2">
-             <a class="nav-link active text-light" href="GenerateTestReport.php">Generate Test Report</a>
+             <a class="nav-link active text-light" href="ViewTestingHistory.php">View Testing History</a>
          </li>
  	   </ul>
  			
@@ -83,6 +83,6 @@ Student ID: B1802197
 </body>
 </html>
 <!--
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->

@@ -1,3 +1,9 @@
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+!-->
 <?php 
 SESSION_START();
 SESSION_DESTROY();
@@ -5,8 +11,10 @@ require_once("common.php");
 ?>
 <!DOCTYPE html>
  <html lang="en">
+ <!-- head !-->
  <head>
     
+	<!-- css source !-->
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,6 +23,7 @@ require_once("common.php");
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
+	<!-- js source !-->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -25,6 +34,7 @@ require_once("common.php");
     <script src='https://code.jquery.com/jquery-3.2.1.min.js'> </script>
 	<script src="js/index.js"></script>
 	
+	<!-- background gif !-->
 	<style>
 		  body {
 		  background-image: url('corona.gif');
@@ -57,6 +67,7 @@ require_once("common.php");
    </nav>
    
 	<!-- body !-->
+	<!-- home details !-->
   <div class = "box">
 	  <h1 id="welcome" class="text-center"> Welcome to CoviDeal</h1>
 	  <br><br>
@@ -83,6 +94,7 @@ require_once("common.php");
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+							<!-- input values !-->
 							<div class="modal-body">
 								<div class="form-group row">
 									<label for="username" class="col-sm-6 col-lg-4 col-form-label"> User Name </label>
@@ -100,6 +112,7 @@ require_once("common.php");
 									</div>
 								</div>
 							</div>
+							<!-- submit button !-->
 							<div class="modal-footer">
 								<input name="action_name" value="login" hidden>
 								<input type="submit" style="margin: 0 auto;" class="btn btn-primary" name="submit" value="Login">
@@ -133,3 +146,9 @@ require_once("common.php");
 	</footer>
 </body>
 </html>
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+!-->

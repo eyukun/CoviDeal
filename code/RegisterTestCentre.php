@@ -1,3 +1,7 @@
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+!-->
 <?php
 	require_once('common.php');
  ?>
@@ -7,12 +11,14 @@
     
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/registerTestCentre.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
+	<!-- js source !-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -22,8 +28,8 @@
   </head>
 
  <body>
+	<!-- body !-->
    <!--navigation-->
-   
  	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
@@ -67,7 +73,8 @@
       
  	</div>
    </nav>
-	<!-- body !-->
+	<!-- container !-->
+	<!-- register centre details !-->
 	<div class = "container" id = "box">
 		<div class="row">
 			<div class="col-lg-12">
@@ -75,6 +82,7 @@
 			  <hr class="my-4">
 			  <p style="font-size:20px;"> Register a test centre with approved name and set up for it</p><br>
 			  <p class="lead">
+			  <!-- register button !-->
 				<button id="btn1" data-toggle="modal" 
 				<?php if($_SESSION['centreID'] != null){ ?> data-target="#" 
 				class="btn btn-dark"
@@ -85,6 +93,7 @@
 			</div>
 			<hr>
 		</div>
+		<!-- error message here !-->
 		<div class="form-group">
 			<div class="col-lg-12">
 				<?php
@@ -95,7 +104,6 @@
 		</div>
 	</div>
 	<br>
-	
 	
 	<!-- Register Test Centre Modal !-->
 		<form action="common.php" method="POST" class="needs-validation" novalidate>
@@ -108,6 +116,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+						<!-- input values !-->
 						<div class="modal-body">
 							<div class="form-group row">
 								<label for="centreName" class="col-sm-6 col-lg-4 col-form-label"> Centre Name</label>
@@ -118,6 +127,7 @@
 								</div>
 							</div>
 						</div>
+						<!-- register button !-->
 						<div class="modal-footer">
 							<input name="action_name" value="registerTestCentre" hidden>
 							<input type="submit" class="btn btn-primary" name="submit" value="Register">
@@ -153,3 +163,7 @@
 	
 </body>
 </html>
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+!-->

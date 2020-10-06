@@ -1,3 +1,10 @@
+/**
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+**/
+// validation function for modal
 (function() {
 'use strict';
 window.addEventListener('load', function() {
@@ -16,3 +23,8 @@ window.addEventListener('load', function() {
 	});
 }, false);
 })();
+
+/**
+Student Name: Eyu Kun
+Student ID: B1900083
+**/

@@ -42,7 +42,10 @@ Student ID: B1802197
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
 		 <li class="nav-item pill-2">
-             <a class="nav-link active text-light" href="GenerateTestReport.php">Generate Test Report</a>
+             <a class="nav-link active text-light" href="RecordNewTest.php">Record New Test</a>
+         </li>
+		 <li class="nav-item pill-3">
+             <a class="nav-link text-light" href="UpdateTestResult.php">Update Test Result</a>
          </li>
  	   </ul>
  			

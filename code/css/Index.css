@@ -1,5 +1,12 @@
+/**
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+**/
+
 /** Body **/
-	
+
   #welcome {
 	margin-top: 385px;
 	font-size: 50px;
@@ -26,9 +33,9 @@
     background:red;
     box-shadow:0 0 10px orange,0 0 10px orange, 0 0 10px orange;
   }
-  
+
   /** Body **/
-  
+
   /** Navigation **/
 
 .navbar {
@@ -139,8 +146,8 @@
 }
 
 .social-icons .button{
-	display: flex; 
-	align-items: center; 
+	display: flex;
+	align-items: center;
 	justify-content: center;
 }
 
@@ -196,3 +203,10 @@
     font-weight:600
   }
 }
+
+/**
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+**/

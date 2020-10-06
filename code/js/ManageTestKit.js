@@ -1,3 +1,4 @@
+// validation function for modal
 (function() {
 'use strict';
 window.addEventListener('load', function() {

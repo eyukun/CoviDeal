@@ -1,25 +1,32 @@
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+!-->
 <?php
 	require_once("common.php");
 ?>
-
 <!DOCTYPE html>
  <html lang="en">
  <head>
-    
+   
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/manageTestKit.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
+	<!-- javascript source !-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/manageTestKit.js"></script>
+	
+	<!-- javascript for search bar !-->
 	<script>
 		function searchTestKit() {
 		  var input, filter, table, tr, td, i, txtValue;
@@ -43,6 +50,8 @@
   </head>
 
  <body>
+	<!-- body !-->
+	
    <!--navigation-->
  	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -85,8 +94,8 @@
  	</div>
    </nav>
    
-   <!-- Body !-->
    <!-- container !-->
+   <!-- website details !-->
   <div class = "container" id = "box">
 	<div class="row">
 		<div class="col-lg-12">
@@ -96,6 +105,8 @@
 		 </div>
 		 <hr>
 	</div>	
+	
+	<!-- search bar !-->
 	 <div class="row align-items-center">
 		<div class="mx-auto">
 			 <form class="form-inline">
@@ -107,6 +118,8 @@
 		 </div>
 	 </div>
 	 <hr>
+	 
+	 <!-- error message here !-->
 	<div class="form-group">
 		<div class="col-lg-12">
 			<?php
@@ -132,10 +145,10 @@
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-		//if material table dont have data, display the message
+		//if test kit table dont have data, display the message
 		if (mysqli_num_rows($result) == 0) { ?>
 			<h3>There are no test kits currently, please add one!</h3>
-		<?php //if have materials
+		<?php //if have test kits
 		} else {
 		?>
 		<h3>Test Kit Table</h3>
@@ -152,6 +165,7 @@
 			  </thead>
 			  <tbody>
 			  <?php
+			  // get each row of test kit into table
 			  while($row = mysqli_fetch_array($resultset)):
 			  ?>
 				<tr>
@@ -160,6 +174,7 @@
 				  <td align="center"><?php echo $row['availableStock'];?></td>
 				  <td align="center"><?php echo $row['centreID'];?></td>
 				  <td align="middle">
+				  <!-- to update a test kit !-->
 				  <button type="button" id="update" value="update" data-toggle="modal" 
 				  data-target="#updateTestKitModal<?php echo $row['kitID'];?>" 
 				  class="btn btn-primary"> Update </button>
@@ -178,6 +193,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+							<!-- input values !-->
 							<div class="modal-body">
 								<div class="form-group row">
 									<label for="kitID" class="col-sm-6 col-lg-4 col-form-label"> Kit ID </label>
@@ -198,6 +214,7 @@
 									</div>
 								</div>
 							</div>
+							<!-- update button !-->
 							<div class="modal-footer">
 								<input name="action_name" value="updateTestKit" hidden>
 								<input type="submit" class="btn btn-primary" name="submit" value="Update">
@@ -212,6 +229,7 @@
 		<?php } ?>
 			<br><br>
 			<div>
+				<!-- register button to register a new test kit !-->
 				  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
 				  data-target="#registerTestKitModal"> Register </button>
 			</div>
@@ -232,6 +250,7 @@
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
+							<!-- input values !-->
 							<div class="modal-body">
 								<div class="form-group row">
 									<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
@@ -249,6 +268,7 @@
 									</div>
 								</div>
 							</div>
+							<!-- register button !-->
 							<div class="modal-footer">
 								<input name="action_name" value="registerTestKit" hidden>
 								<input type="submit" class="btn btn-primary" name="submit" value="Register">
@@ -281,3 +301,7 @@
 	
 </body>
 </html>
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+!-->
