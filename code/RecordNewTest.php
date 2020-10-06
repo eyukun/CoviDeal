@@ -11,7 +11,9 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
+
+	<link rel="stylesheet" href="css/recordNewTest.css" type="text/css" media="screen">
+
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -59,12 +61,7 @@ Student ID: B1802197
          </li>
 		
          <li class="nav-item pill-3">
-             <a 
-			 <?php if(isset($_SESSION['testID']) == null){ ?> href="#" title="Please register a Test First!" 
-			 class="nav-link text-secondary"
-			 <?php }
-			 else { ?> class="nav-link" href="FindTest.php" <?php } ?>
-			 > Update Test Result</a>
+             <a class="nav-link" href="UpdateTestResult.php"> Update Test Result</a>
          </li>
  	   </ul>
  			
@@ -115,7 +112,7 @@ Student ID: B1802197
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
 		
 		?>
-		<h5>Test Table</h5>
+		<h3>Test Table</h3>
 		<form action="FindPatient.php">
 		<!-- table of new test !-->
 		<table class="table table-borderless" id="testTable">
@@ -153,6 +150,8 @@ Student ID: B1802197
 			<input type="submit" class="btn btn-primary" name="Done" value="Done">
 		</div>
 		</form>
+	</div>
+	<br><br>
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
