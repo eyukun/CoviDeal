@@ -11,7 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/FindPatient.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -59,12 +59,7 @@ Student ID: B1802197
          </li>
 		
          <li class="nav-item pill-3">
-             <a 
-			 <?php if(isset($_SESSION['testID']) != null){ ?> href="#" title="Please Register a Test First!" 
-			 class="nav-link text-secondary"
-			 <?php }
-			 else { ?> class="nav-link" href="FindTest.php" <?php } ?>
-			 > Update Test Result</a>
+             <a class="nav-link" href="UpdateTestResult.php"> Update Test Result</a>
          </li>
  	   </ul>
  			
@@ -80,7 +75,7 @@ Student ID: B1802197
    <!-- container !-->
   <div class = "container" id = "box">
 	<div>
-	  <h1 class="display-4">Manage Patient</h1>
+	  <h1 class="display-4">Record New Test</h1>
 	  <hr class="my-4">
 	  <p style="font-size:20px;"> Manage or Register for a Patient</p><br>
 	</div>	
@@ -125,7 +120,7 @@ Student ID: B1802197
 		
 		$testkitTable="use testkit";
 		$check->query($testkitTable);
-		$test="SELECT kitid,testname FROM testkit ";
+		$test="SELECT kitid,testname FROM testkit where centreID='".$_SESSION['centreID']."'";
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
@@ -139,11 +134,11 @@ Student ID: B1802197
 		
 		//if material table dont have data, display the message
 		if (mysqli_num_rows($resultset) == 0) { ?>
-			<h5>There are no Patient currently, please add one!</h5>
+			<h3>There are no Patient currently, please add one!</h3>
 		<?php //if have materials
 		} else {
 		?>
-		<h5>Patient Table</h5>
+		<h3>Patient Table</h3>
 		<!-- list of all patient !-->
 		<table class="table table-borderless" id="patientTable">
 			  <thead>
@@ -180,7 +175,7 @@ Student ID: B1802197
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Update Patient</h5>
+									<h5 class="modal-title" id="exampleModalLongTitle">Update Patient & Record New Test</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -207,7 +202,7 @@ Student ID: B1802197
 												<option value="Suspected">Suspected</option>
 											</select><br>
 										</div>
-										<label for="name"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
+										<label for="symptoms" class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
 										<div class="col-sm-12 col-lg-8">
 											<input type="text" class="form-control" name="symptoms"
 											maxlength = "50" pattern="[a-zA-Z ]+"
@@ -259,7 +254,7 @@ Student ID: B1802197
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">RecordPatient</h5>
+								<h5 class="modal-title" id="exampleModalLongTitle">Record Patient & Record New Test</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -303,13 +298,14 @@ Student ID: B1802197
 								</select>
 								<br>
 								</div>
-								<label for="name"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
+								<label for="symptoms"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
 								<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="symptoms"
 									maxlength = "50"
 									placeholder="Symptoms of the Patient" required>
 									<div class="invalid-feedback">Please enter the Symptoms.</div><br>
 								</div>
+								
 								<label for="kitID"class="col-sm-6 col-lg-4 col-form-label">KITID</label>
 										<div class="col-sm-12 col-lg-8">
 											
