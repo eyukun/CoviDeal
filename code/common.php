@@ -371,9 +371,10 @@ function updatePatient()
 		
 		
 		if ($user != null){
-			$error = '<div class="alert alert-danger alert-dismissible fade show">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test added Successfully!</strong></div>';
+			$error = '<div class="alert alert-success alert-dismissible fade show">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>New Test has been added successfully!</strong></div>';
+				$_SESSION['error'] = $error;
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
 		}
@@ -414,9 +415,9 @@ function record_tester()
 		$user = db_result($insert);
 		if ($user == true){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Tester has been updated successfully!</strong></div>';
-			$_SESSION['error'] = $error;
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>New Tester has been added successfully!</strong></div>';
+				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
 		else {
@@ -465,10 +466,10 @@ function recordPatient(){
 		$new_test_id = db_insert($create_test_id_sql);
 		
 		if ($user == null){
-				$error = '<div class="alert alert-danger alert-dismissible fade show">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test added Successfully!</strong></div>';
-			$_SESSION['error'] = $error;
+			$error = '<div class="alert alert-success alert-dismissible fade show">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>New Test has been added successfully!</strong></div>';
+				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 		}
 		else {
