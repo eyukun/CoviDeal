@@ -1,0 +1,312 @@
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+!-->
+<?php
+session_start();
+// echo "Good Connection!<br>";
+
+// $k = "";
+// foreach ($_POST as $key => $value) {
+//    $k .= $key ." : ". $value. '\n';
+// }
+// if($k != ""){
+// 	echo '<script> console.info("Session: \n' . $k . '") </script>';
+// }
+
+// print the username on top of website
+if(isset($_SESSION['user_name'])){
+	echo "Welcome " . $_SESSION['user_name'] ;
+}
+
+// To decide which function
+if(isset($_POST['action_name'])) {
+	if (isset($_SESSION['error'])){
+		unset($_SESSION['error']);
+	}
+	
+	// determine which form
+	switch ($_POST['action_name']) {
+		
+		// login function
+		case 'login':
+			login();
+			break;
+		
+		// register test centre function
+		case 'registerTestCentre':
+			registerTestCentre();
+			break;
+			
+		// update test kit function
+		case 'updateTestKit':
+			updateTestKit();
+			break;
+			
+		// register test kit function
+		case 'registerTestKit':
+			registerTestKit();
+			break;
+			
+		// others...
+		default:
+			# code...
+			break;
+	}
+
+  	
+}
+
+// login function
+function login() {
+
+	// get username and password from index.php
+	$sql = "SELECT * FROM user where username = '" . $_POST['username'] . "' and password = '" . $_POST['password'] . "'";
+    $user = db_find($sql);
+		
+    if($user != null){ //authentication success, save in session
+
+		$_SESSION['id']     = $user->id;
+		$_SESSION['username']    = $user->username;
+		$_SESSION['user_name']   = $user->name;
+		$_SESSION['position'] = $user->position;
+		$_SESSION['patient_type'] = $user->patientType;
+		$_SESSION['centreID'] = $user->centreID;
+
+		// determine position
+		switch ($_SESSION['position']) {
+			case 'tester': // tester
+    			echo "<script> window.location.assign('FindPatient.php'); </script>";
+				break;
+			case 'manager': // manager
+				if ($_SESSION['centreID'] == null){
+					echo "<script> window.location.assign('RegisterTestCentre.php'); </script>";
+				}
+				else {
+					echo "<script> window.location.assign('RecordTester.php'); </script>";
+				}
+				break;
+			case 'officer': // officer
+				echo "<script> window.location.assign('GenerateTestReport.php'); </script>";
+				break;
+			case 'null': // patient
+				if ($_SESSION['patient_type'] != null){
+					echo "<script> window.location.assign('ViewTestingHistory.php'); </script>";
+				}
+				break;
+				
+			default: // no well defined user
+				header("Location:index.php?error=usernotdefined");
+    			echo "<script> window.location.assign('Index.php'); </script>";
+				break;
+		}
+
+
+    }else{ //fail to login
+		header("Location:index.php?error=invalidlogin");
+    	echo "<script> window.location.assign('index.php'); </script>";
+    }
+	
+}
+
+// for select and fetch an object
+function db_find($sql){
+
+	$servername = "localhost";
+	$username   = "root";
+	$password   = "";
+	$dbname     = "covideal";
+	
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+
+	// Check connection
+	if ($conn->connect_error) {
+	  die("Connection failed: " . $conn->connect_error);
+	}
+	
+	$result = $conn->query($sql);
+
+	return $result->fetch_object();
+}
+
+// for result of insert, update an existing object
+function db_result($sql){
+	$servername = "localhost";
+	$username   = "root";
+	$password   = "";
+	$dbname     = "covideal";
+
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+
+	// Check connection
+	if ($conn->connect_error) {
+	  die("Connection failed: " . $conn->connect_error);
+	}
+	
+	$result = $conn->query($sql);
+	return $result;
+}
+
+// register test centre function
+function registerTestCentre(){
+
+	//get the data from registerTestCentre.php
+	//prevent database error due to user's input
+	$centreName = $_POST['centreName'];
+	$sql = "SELECT * FROM testcentre WHERE centreName='$centreName'";
+	$id = $_SESSION["id"];
+	$centre = db_find($sql);
+
+
+	// if have result for this test centre
+	if($centre != null)
+	{
+		// print messages in interface file
+		$error = '<div class="alert alert-danger alert-dismissible fade show">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Cannot add! ' . $centreName . ' (Test Centre) has already existed.</strong></div>';
+		$_SESSION['error'] = $error;
+		echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
+	}
+	// new test centre
+	else{
+		// if have registered test centre for this manager
+		// this happen after a manager register successfully and wants to register one more
+		if ($_SESSION['centreID'] != null){
+			$error = '<div class="alert alert-danger alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong> You are owning a test centre currently ! </strong></div>';
+				$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
+		}
+		else {
+			//add the test centre
+			$insert = "insert into testcentre(centreName, id) values ('$centreName', '$id');";
+			$centre = db_result($insert);
+			if ($centre == true){
+				$sql1 = "SELECT * FROM testcentre WHERE centreName='$centreName'";
+				$centre = db_find($sql1);
+				$centreID = $centre->centreID;
+				
+				// update manager's centre id
+				$sql1 = "UPDATE user SET centreID='$centreID' WHERE id='$id'";
+				$user = db_result($sql1);
+				if ($user != null)	{
+					$error = '<div class="alert alert-success alert-dismissible fade show">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>New test centre has been added successfully!</strong></div>';
+					$_SESSION['error'] = $error;
+					$_SESSION['centreID'] = $centreID;
+					echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
+				}
+			}
+			else {
+				$error = '<div class="alert alert-danger alert-dismissible fade show">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong> Test Centre added unsuccessfully!</strong></div>';
+				$_SESSION['error'] = $error;
+				echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
+			}
+		}
+	}
+}
+
+// update test kit stock function
+function updateTestKit(){
+	
+	// get kitID from update form
+	$kitID = $_POST['kitID'];
+	$sql = "SELECT * FROM testkit WHERE kitID='$kitID' AND centreID='".$_SESSION['centreID']."'" ;
+	$testkit = db_find($sql);
+	
+	// if the test kit not found
+	if($testkit == null)
+	{
+		$error = '<div class="alert alert-danger alert-dismissible fade show">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Error occurs! ' . $kitID . ' (Test Kit) is not found.</strong></div>';
+		$_SESSION['error'] = $error;
+		echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
+	}
+	
+	// if the test kit found
+	else {
+		// update the availableStock of test kit
+		$availableStock = $testkit->availableStock;
+		$updatedStock = $_POST['stock'] + $availableStock;
+		$update = "UPDATE testkit SET availableStock='$updatedStock' WHERE kitID='$kitID' 
+		AND centreID='".$_SESSION['centreID']."'";
+		$testkit = db_result($update);
+		// update success
+		if ($testkit != null){
+			$error = '<div class="alert alert-success alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>Test Kit Stock has been updated successfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
+		}
+		// update failed
+		else {
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Test Centre updated unsuccessfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
+		}
+	}
+}
+
+// register test kit function
+function registerTestKit(){
+
+	// get information from form to register a new test kit
+	$testName = $_POST['testName'];
+	$availableStock = $_POST['stock'];
+	$centreID = $_SESSION["centreID"];
+	$sql = "SELECT * FROM testkit WHERE testName='$testName' AND centreID='$centreID'";
+	$testkit = db_find($sql);
+
+
+	// if have result for this test kit
+	if($testkit != null)
+	{
+		$error = '<div class="alert alert-danger alert-dismissible fade show">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Cannot add! ' . $testName . ' (Test Kit) has already existed.</strong></div>';
+		$_SESSION['error'] = $error;
+		echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
+	}
+	// new test kit
+	else{
+		//add the test kit
+		$insert = "insert into testkit(testName, availableStock, centreID) values ('$testName', '$availableStock', '$centreID');";
+		$testkit = db_result($insert);
+		// register success
+		if ($testkit == true){
+				$error = '<div class="alert alert-success alert-dismissible fade show">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>New test kit has been added successfully!</strong></div>';
+				$_SESSION['error'] = $error;
+				echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
+		}
+		// register fail
+		else {
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Test Kit added unsuccessfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
+		}
+	}
+}
+?>
+<!--
+Student Name: Eyu Kun
+Student ID: B1900083
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+!-->
