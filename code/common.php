@@ -49,7 +49,16 @@ if(isset($_POST['action_name'])) {
 		case 'registerTestKit':
 			registerTestKit();
 			break;
-			
+		case'recordPatient':
+			recordPatient();
+			break;
+		case'record_tester':
+			record_tester();
+			break;
+		case'updatePatient':
+			updatePatient();
+			break;
+
 		// others...
 		default:
 			# code...
@@ -148,6 +157,27 @@ function db_result($sql){
 	$result = $conn->query($sql);
 	return $result;
 }
+//For return id after insert object
+function db_insert($sql){
+
+	$servername = "127.0.0.1";
+	$username   = "root";
+	$password   = "";
+	$dbname     = "covideal";
+
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+
+	// Check connection
+	if ($conn->connect_error) {
+	  die("Connection failed: " . $conn->connect_error);
+	}
+	
+	$result = $conn->query($sql);
+
+	return $conn->insert_id;
+}
+
 
 // register test centre function
 function registerTestCentre(){
@@ -301,8 +331,7 @@ function registerTestKit(){
 		}
 	}
 }
-<<<<<<< Updated upstream
-=======
+
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
@@ -310,7 +339,7 @@ function updatePatient()
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
-	
+
 	if($user == null)
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
@@ -331,6 +360,8 @@ function updatePatient()
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
 								." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+
+
 		
 		
 		//send testid to next page
@@ -350,8 +381,8 @@ function updatePatient()
 				<strong>New Test has been added successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
-		}
-	}
+		}	
+		
 }
 //to record a tester with existing data into database and record new test
 function record_tester()
@@ -449,18 +480,7 @@ function recordPatient(){
 					$_SESSION['error'] = $error;
 					echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 			}
-		}
-		else {
-			$error = '<div class="alert alert-danger alert-dismissible fade show">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> User added unsuccessfully!</strong></div>';
-			$_SESSION['error'] = $error;
-			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
-		}
-	}
-}
 
->>>>>>> Stashed changes
 ?>
 <!--
 Student Name: Eyu Kun
