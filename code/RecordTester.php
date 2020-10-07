@@ -11,9 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
 	<link rel="stylesheet" href="css/manageTestKit.css" type="text/css" media="screen">
-
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -80,16 +78,16 @@ Student ID: B1802197
 							<h5 class="modal-title" id="exampleModalLongTitle">Add a New Tester</h5>
 						</div>
 						<div class="modal-body">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<?php
+									if (isset($_SESSION['error'])) {
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);} ?>
+								</div>
+							</div>
 							<div class="form-group row">
 								<!-- <div id="error"> -->
-									<div class="form-group">
-										<div class="col-lg-12">
-											<?php
-											if (isset($_SESSION['error'])) {
-												echo $_SESSION['error'];
-												unset($_SESSION['error']);} ?>
-										</div>
-									</div>
 								<label for="username"class="col-sm-6 col-lg-12 col-form-label"> Username</label>
 								<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="username"  pattern="[a-zA-Z ]+" maxlength = "20"
@@ -116,6 +114,7 @@ Student ID: B1802197
 								</div>
 							</div>
 						</div>
+						
 						 <!--go to common.php to record new tester!-->
 						<div class="modal-footer">
 							<input name="action_name" value ="record_tester" hidden>
