@@ -123,7 +123,7 @@ Student ID: B1802197
 		
 		$testkitTable="use testkit";
 		$check->query($testkitTable);
-		$test="SELECT kitid,testname FROM testkit where centreID='".$_SESSION['centreID']."'";
+		$test="SELECT kitid,testname FROM testkit where availableStock > 0 AND centreID='".$_SESSION['centreID']."'";
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
@@ -222,7 +222,7 @@ Student ID: B1802197
 												
 													foreach($testkit_row  as $i => $v) :
 												?>
-												<option value="<?php echo $i ?>"><?php echo $i."   ".$v;?></option>
+												<option value="<?php echo $i ?>"><?php echo $i.":  ".$v;?></option>
 												<?php endforeach ?>
 											</select>
 										</div>
@@ -320,7 +320,7 @@ Student ID: B1802197
 												
 													foreach($testkit_row  as $i => $v) :
 												?>
-												<option value="<?php echo $i ?>"><?php echo $i."   ".$v;?></option>
+												<option value="<?php echo $i ?>"><?php echo $i.":   ".$v;?></option>
 												<?php endforeach ?>
 											</select>
 										</div>
