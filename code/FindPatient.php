@@ -86,7 +86,8 @@ Student ID: B1802197
 			 <form class="form-inline">
 				<i class="fa fa-search" aria-hidden="true" 
 				style="margin-right: 6px;"></i>
-			   <input class="form-control" id="filter" type="number" min="1"
+			   <input class="form-control" id="filter" 
+			   type="number" min="1" style="width: 400px;"
 			   placeholder="Search by PatientID" onkeyup="searchPatient()">
 			 </form>	
 		 </div>

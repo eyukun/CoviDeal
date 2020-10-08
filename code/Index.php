@@ -19,7 +19,7 @@ require_once("common.php");
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/index.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/Index.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -68,20 +68,15 @@ require_once("common.php");
    
 	<!-- body !-->
 	<!-- home details !-->
-  <div class = "box">
-	  <h1 id="welcome" class="text-center"> Welcome to CoviDeal</h1>
-	  <br><br>
-	  <div style="text-align:center">
-		<a class="login" data-toggle="modal" data-target="#loginModal">
-		  <span style="color: blue;" role="button">LogIn</span>
-		</a>
-	  </div>	
+  <div class="container">
+		  <h1 id="welcome" class="text-center"> Welcome to CoviDeal</h1>
+		  <br>
+			  <div style="text-align:center">
+				<a class="login" data-toggle="modal" data-target="#loginModal">
+				  <span style="color: blue;" role="button">LogIn</span>
+				</a>
+			  </div>	
 	</div>
-	
-	
-	
-	
-	
 	
 	<!-- Login Modal !-->
 			<form action="common.php" method="POST" class="needs-validation" novalidate>
@@ -124,7 +119,6 @@ require_once("common.php");
 	
 	
 	<!-- footer !-->
-	  <!-- Site footer -->
     <footer class="site-footer">
       <div class="container">
         <div class="row">
