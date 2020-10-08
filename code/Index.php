@@ -54,21 +54,18 @@ require_once("common.php");
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-       <ul class="nav nav-pills" role="tablist">
-			 <li class="nav-item pill-1">
-				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
-			 </li>
- 	   </ul>
- 			
-		<ul class="navbar-nav mr-auto">
-      
- 	</div>
+		 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		   <ul class="nav nav-pills" role="tablist">
+				 <li class="nav-item pill-1">
+					<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
+				 </li>
+		   </ul>
+		  
+		</div>
    </nav>
    
 	<!-- body !-->
 	<!-- home details !-->
-  <div class="container">
 		  <h1 id="welcome" class="text-center"> Welcome to CoviDeal</h1>
 		  <br>
 			  <div style="text-align:center">
@@ -76,7 +73,6 @@ require_once("common.php");
 				  <span style="color: blue;" role="button">LogIn</span>
 				</a>
 			  </div>	
-	</div>
 	
 	<!-- Login Modal !-->
 			<form action="common.php" method="POST" class="needs-validation" novalidate>
@@ -119,7 +115,7 @@ require_once("common.php");
 	
 	
 	<!-- footer !-->
-    <footer class="site-footer">
+    <div class="site-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-sm-6 col-xs-12">
@@ -137,7 +133,7 @@ require_once("common.php");
           </div>
         </div>
       </div>
-	</footer>
+	</div>
 </body>
 </html>
 <!--
