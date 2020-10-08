@@ -47,237 +47,235 @@ Student ID: B1900083
 		  }
 		}
 	</script>
-  </head>
+ </head>
 
  <body>
 	<!-- body !-->
-	
    <!--navigation-->
  	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-       <ul class="nav nav-pills" role="tablist">
-			 <li class="nav-item pill-1">
-				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		   <ul class="nav nav-pills" role="tablist">
+				 <li class="nav-item pill-1">
+					<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
+				 </li>
+			 <li class="nav-item pill-2">
+				 <a 
+				 <?php if(isset($_SESSION['centreID']) != null){ ?> class="nav-link text-secondary" 
+				 href="#" title="You are owning a test centre currently !" <?php }
+				else { ?> class="nav-link" href="RegisterTestCentre.php" <?php } ?>
+				 >Register Centre</a>
 			 </li>
-         <li class="nav-item pill-2">
-             <a 
-			 <?php if(isset($_SESSION['centreID']) != null){ ?> class="nav-link text-secondary" 
-			 href="#" title="You are owning a test centre currently !" <?php }
-			else { ?> class="nav-link" href="RegisterTestCentre.php" <?php } ?>
-			 >Register Centre</a>
-         </li>
-		
-         <li class="nav-item pill-3">
-             <a
-			 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
-			 href="#" title="Please register a test centre first !" <?php }
-			 else { ?> class="nav-link" href="RecordTester.php" <?php } ?>
-			 >Record Tester</a>
-         </li>
-		 <li class="nav-item pill-4">
-             <a
-			 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
-			 href="#" title="Please register a test centre first !" <?php } 
-			 else { ?> class="nav-link active" href="ManageTestKit.php" <?php } ?>
-			 >Manage Test Kit Stock</a>
-         </li>
- 	   </ul>
- 			
-		<ul class="navbar-nav mr-auto">
-       </ul>
-       <a class="navbar-brand" href="index.php" style="font-family:cursive; color: white;"><i class="fa fa-sign-out"></i>Sign out</a>
-      
- 	</div>
+			
+			 <li class="nav-item pill-3">
+				 <a
+				 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
+				 href="#" title="Please register a test centre first !" <?php }
+				 else { ?> class="nav-link" href="RecordTester.php" <?php } ?>
+				 >Record Tester</a>
+			 </li>
+			 <li class="nav-item pill-4">
+				 <a
+				 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
+				 href="#" title="Please register a test centre first !" <?php } 
+				 else { ?> class="nav-link active" href="ManageTestKit.php" <?php } ?>
+				 >Manage Test Kit Stock</a>
+			 </li>
+		   </ul>
+				
+			<ul class="navbar-nav mr-auto">
+		   </ul>
+		   <a class="navbar-brand" href="index.php" style="font-family:cursive; color: white;"><i class="fa fa-sign-out"></i>Sign out</a>
+		  
+		</div>
    </nav>
-   
-   <!-- container !-->
-   <!-- website details !-->
-  <div class = "container" id = "box">
-	<div class="row">
-		<div class="col-lg-12">
-		  <h1 class="display-4">Manage Test Kit Stock</h1>
-		  <hr class="my-4">
-		  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
+		   <!-- container !-->
+		   <!-- website details !-->
+		  <div class = "container" id = "box">
+			<div class="row">
+				<div class="col-lg-12">
+				  <h1 class="display-4">Manage Test Kit Stock</h1>
+				  <hr class="my-4">
+				  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
+				 </div>
+				 <hr>
+			</div>	
+			
+			<!-- search bar !-->
+			 <div class="row align-items-center">
+				<div class="mx-auto">
+					 <form class="form-inline">
+						<i class="fa fa-search" aria-hidden="true" 
+						style="margin-right: 6px;"></i>
+				   <input class="form-control" style="width: 400px;"
+				   id="filter" type="number" min="1"
+				   placeholder="Search by KitID" onkeyup="searchTestKit()">
+				 </form>	
+			 </div>
 		 </div>
 		 <hr>
-	</div>	
-	
-	<!-- search bar !-->
-	 <div class="row align-items-center">
-		<div class="mx-auto">
-			 <form class="form-inline">
-				<i class="fa fa-search" aria-hidden="true" 
-				style="margin-right: 6px;"></i>
-			   <input class="form-control" id="filter" type="number" min="1"
-			   placeholder="Search by KitID" onkeyup="searchTestKit()">
-			 </form>	
-		 </div>
-	 </div>
-	 <hr>
-	 
-	 <!-- error message here !-->
-	<div class="form-group">
-		<div class="col-lg-12">
-			<?php
-			if (isset($_SESSION['error'])) {
-				echo $_SESSION['error'];
-				unset($_SESSION['error']);} ?>
-		</div>
-	</div>
-	
-	<!-- display the list of test kit !-->
-	<?php
-	//connect to mysql
-		$conn = new mysqli("localhost","root","", "covideal");
-		if ($conn->connect_error){
-			die("Connection failure: " . mysqli_connect_error());
-		}
-		
-		//use table
-		$testKitTable = "use testkit";
-		$conn->query($testKitTable);
-	    $sql = "SELECT * FROM testkit WHERE centreID='".$_SESSION['centreID']."'";
-	    $result = mysqli_query($conn, $sql);
-		
-		//fetch the data into while loop
-		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-		//if test kit table dont have data, display the message
-		if (mysqli_num_rows($result) == 0) { ?>
-			<h3>There are no test kits currently, please add one!</h3>
-		<?php //if have test kits
-		} else {
-		?>
-		<h3>Test Kit Table</h3>
-		<!-- list of all test kit !-->
-		<table class="table table-borderless" id="testkitTable">
-			  <thead>
-				<tr class="thead-dark">
-				  <th class="text-center">KitID</th>
-				  <th class="text-center">Test_Name</th>
-				  <th class="text-center">Available_Stock</th>
-				  <th class="text-center">CentreID</th>
-				  <th></th>
-				</tr>
-			  </thead>
-			  <tbody>
-			  <?php
-			  // get each row of test kit into table
-			  while($row = mysqli_fetch_array($resultset)):
-			  ?>
-				<tr>
-				  <td align="center"><?php echo $row['kitID'];?></td>
-				  <td align="center"><?php echo $row['testName'];?></td>
-				  <td align="center"><?php echo $row['availableStock'];?></td>
-				  <td align="center"><?php echo $row['centreID'];?></td>
-				  <td align="middle">
-				  <!-- to update a test kit !-->
-				  <button type="button" id="update" value="update" data-toggle="modal" 
-				  data-target="#updateTestKitModal<?php echo $row['kitID'];?>" 
-				  class="btn btn-primary"> Update </button>
-				  </td>
-				</tr>				
-			  
-			  <!-- Update Test Kit Stock Modal !-->
-			<form action="common.php" method="POST" class="needs-validation" novalidate>
-				<div class="modal fade" id="updateTestKitModal<?php echo $row['kitID'];?>"
-				tabindex="-1" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Update Test Kit Stock</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<!-- input values !-->
-							<div class="modal-body">
-								<div class="form-group row">
-									<label for="kitID" class="col-sm-6 col-lg-4 col-form-label"> Kit ID </label>
-									<div class="col-sm-12 col-lg-8">
-										<input type="text" class="form-control" name="kitID" value="<?php echo $row['kitID'];?>" readonly><br>
-									</div>
-								
-									<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name </label>
-									<div class="col-sm-12 col-lg-8">
-										<input type="text" class="form-control" name="testName" value="<?php echo $row['testName'];?>" readonly><br>
-									</div>
-								
-									<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
-									<div class="col-sm-12 col-lg-8">
-										<input type="number" min="1" pattern="^[1-9][0-9]*$"
-										class="form-control" name="stock" required>
-										<div class="invalid-feedback">Please enter a valid number.</div><br>
-									</div>
-								</div>
-							</div>
-							<!-- update button !-->
-							<div class="modal-footer">
-								<input name="action_name" value="updateTestKit" hidden>
-								<input type="submit" class="btn btn-primary" name="submit" value="Update">
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-			<?php endwhile;?>
-			</tbody>
-		</table>
-		<?php } ?>
-			<br><br>
-			<div>
-				<!-- register button to register a new test kit !-->
-				  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
-				  data-target="#registerTestKitModal"> Register </button>
+		 
+		 <!-- error message here !-->
+		<div class="form-group">
+			<div class="col-lg-12">
+				<?php
+				if (isset($_SESSION['error'])) {
+					echo $_SESSION['error'];
+					unset($_SESSION['error']);} ?>
 			</div>
-			<br>
-	   </div>  
-		<br><br>
+		</div>
 		
-		
-		
-		<!-- Register Test Kit Modal !-->
-			<form action="common.php" method="POST" class="needs-validation" novalidate>
-				<div class="modal fade" id="registerTestKitModal" tabindex="-1" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Register Test Kit</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<!-- input values !-->
-							<div class="modal-body">
-								<div class="form-group row">
-									<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
-									<div class="col-sm-12 col-lg-8">
-										<input type="text" pattern="[a-zA-Z ]+"
-										class="form-control" name="testName" required>
-										<div class="invalid-feedback">Please enter a test name contains only letters.</div><br>
-									</div>
-						
-									<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
-									<div class="col-sm-12 col-lg-8">
-										<input type="number" min="1" pattern="^[1-9][0-9]*$"
-										class="form-control" name="stock" required>
-										<div class="invalid-feedback">Please enter a valid number.</div><br>
+		<!-- display the list of test kit !-->
+		<?php
+		//connect to mysql
+			$conn = new mysqli("localhost","root","", "covideal");
+			if ($conn->connect_error){
+				die("Connection failure: " . mysqli_connect_error());
+			}
+			
+			//use table
+			$testKitTable = "use testkit";
+			$conn->query($testKitTable);
+			$sql = "SELECT * FROM testkit WHERE centreID='".$_SESSION['centreID']."'";
+			$result = mysqli_query($conn, $sql);
+			
+			//fetch the data into while loop
+			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
+			//if test kit table dont have data, display the message
+			if (mysqli_num_rows($result) == 0) { ?>
+				<h3>There are no test kits currently, please add one!</h3>
+			<?php //if have test kits
+			} else {
+			?>
+			<h3>Test Kit Table</h3>
+			<!-- list of all test kit !-->
+			<table class="table table-borderless" id="testkitTable">
+				  <thead>
+					<tr class="thead-dark">
+					  <th class="text-center">KitID</th>
+					  <th class="text-center">Test_Name</th>
+					  <th class="text-center">Available_Stock</th>
+					  <th class="text-center">CentreID</th>
+					  <th></th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  <?php
+				  // get each row of test kit into table
+				  while($row = mysqli_fetch_array($resultset)):
+				  ?>
+					<tr>
+					  <td align="center"><?php echo $row['kitID'];?></td>
+					  <td align="center"><?php echo $row['testName'];?></td>
+					  <td align="center"><?php echo $row['availableStock'];?></td>
+					  <td align="center"><?php echo $row['centreID'];?></td>
+					  <td align="middle">
+					  <!-- to update a test kit !-->
+					  <button type="button" id="update" value="update" data-toggle="modal" 
+					  data-target="#updateTestKitModal<?php echo $row['kitID'];?>" 
+					  class="btn btn-primary"> Update </button>
+					  </td>
+					</tr>				
+				  
+				  <!-- Update Test Kit Stock Modal !-->
+				<form action="common.php" method="POST" class="needs-validation" novalidate>
+					<div class="modal fade" id="updateTestKitModal<?php echo $row['kitID'];?>"
+					tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Update Test Kit Stock</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!-- input values !-->
+								<div class="modal-body">
+									<div class="form-group row">
+										<label for="kitID" class="col-sm-6 col-lg-4 col-form-label"> Kit ID </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" class="form-control" name="kitID" value="<?php echo $row['kitID'];?>" readonly><br>
+										</div>
+									
+										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" class="form-control" name="testName" value="<?php echo $row['testName'];?>" readonly><br>
+										</div>
+									
+										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="number" min="1" pattern="^[1-9][0-9]*$"
+											class="form-control" name="stock" required>
+											<div class="invalid-feedback">Please enter a valid number.</div><br>
+										</div>
 									</div>
 								</div>
-							</div>
-							<!-- register button !-->
-							<div class="modal-footer">
-								<input name="action_name" value="registerTestKit" hidden>
-								<input type="submit" class="btn btn-primary" name="submit" value="Register">
+								<!-- update button !-->
+								<div class="modal-footer">
+									<input name="action_name" value="updateTestKit" hidden>
+									<input type="submit" class="btn btn-primary" name="submit" value="Update">
+								</div>
 							</div>
 						</div>
 					</div>
+				</form>
+				<?php endwhile;?>
+				</tbody>
+			</table>
+			<?php } ?>
+				<br><br>
+				<div>
+					<!-- register button to register a new test kit !-->
+					  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
+					  data-target="#registerTestKitModal"> Register </button>
 				</div>
-			</form>
-		
+				<br>
+		   </div>  
+			<br><br><br>
+			
+			
+			
+			<!-- Register Test Kit Modal !-->
+				<form action="common.php" method="POST" class="needs-validation" novalidate>
+					<div class="modal fade" id="registerTestKitModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Register Test Kit</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!-- input values !-->
+								<div class="modal-body">
+									<div class="form-group row">
+										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" pattern="[a-zA-Z ]+"
+											class="form-control" name="testName" required>
+											<div class="invalid-feedback">Please enter a test name contains only letters.</div><br>
+										</div>
+							
+										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="number" min="1" pattern="^[1-9][0-9]*$"
+											class="form-control" name="stock" required>
+											<div class="invalid-feedback">Please enter a valid number.</div><br>
+										</div>
+									</div>
+								</div>
+								<!-- register button !-->
+								<div class="modal-footer">
+									<input name="action_name" value="registerTestKit" hidden>
+									<input type="submit" class="btn btn-primary" name="submit" value="Register">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">

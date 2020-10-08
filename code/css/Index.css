@@ -18,7 +18,7 @@ Student ID: B1802197
     position:relative;
     display:inline-block;
     padding:15px 30px;
-	margin: -10px 0px 50px 0px;
+	margin: -10px 0px 30px 0px;
     color:blue;
     text-transform:uppercase;
     Letter-spacing:4px;
@@ -62,8 +62,8 @@ Student ID: B1802197
   font-size:15px;
   line-height:24px;
   color:#737373;
+  margin-top: 10px;
 }
-
 
 
 .site-footer a
@@ -202,6 +202,9 @@ Student ID: B1802197
     margin-right:0;
     font-weight:600
   }
+	.site-footer {
+		position: absolute;
+	}
 }
 
 /**
