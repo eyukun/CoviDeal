@@ -25,6 +25,7 @@ Student ID: B1900083
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/registerTestCentre.js"></script>
+	
   </head>
 
  <body>
@@ -102,8 +103,8 @@ Student ID: B1900083
 					unset($_SESSION['error']);} ?>
 			</div>
 		</div>
-	</div>
-	<br>
+	 </div>
+	<br><br><br>
 	
 	<!-- Register Test Centre Modal !-->
 		<form action="common.php" method="POST" class="needs-validation" novalidate>
@@ -124,6 +125,12 @@ Student ID: B1900083
 									<input type="text" pattern="[a-zA-Z ]+"
 									class="form-control" name="centreName" required>
 									<div class="invalid-feedback">Please enter a centre name contains only letters.</div><br>
+								</div>
+								<label for="address" class="col-sm-6 col-lg-4 col-form-label"> Address </label>
+								<div class="col-sm-12 col-lg-8">
+									<input type="text"
+									class="form-control" name="address" required>
+									<div class="invalid-feedback">Please enter an address.</div><br>
 								</div>
 							</div>
 						</div>
