@@ -185,6 +185,7 @@ function registerTestCentre(){
 	//get the data from registerTestCentre.php
 	//prevent database error due to user's input
 	$centreName = $_POST['centreName'];
+	$address = $_POST['address'];
 	$sql = "SELECT * FROM testcentre WHERE centreName='$centreName'";
 	$id = $_SESSION["id"];
 	$centre = db_find($sql);
@@ -213,7 +214,7 @@ function registerTestCentre(){
 		}
 		else {
 			//add the test centre
-			$insert = "insert into testcentre(centreName, id) values ('$centreName', '$id');";
+			$insert = "insert into testcentre(centreName, address, id) values ('$centreName', '$address', '$id');";
 			$centre = db_result($insert);
 			if ($centre == true){
 				$sql1 = "SELECT * FROM testcentre WHERE centreName='$centreName'";
@@ -331,7 +332,6 @@ function registerTestKit(){
 		}
 	}
 }
-
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
@@ -339,7 +339,7 @@ function updatePatient()
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
-
+	
 	if($user == null)
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
@@ -360,8 +360,6 @@ function updatePatient()
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
 								." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
-
-
 		
 		
 		//send testid to next page
@@ -381,8 +379,8 @@ function updatePatient()
 				<strong>New Test has been added successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
-		}	
-		
+		}
+	}
 }
 //to record a tester with existing data into database and record new test
 function record_tester()
@@ -480,6 +478,16 @@ function recordPatient(){
 					$_SESSION['error'] = $error;
 					echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 			}
+		}
+		else {
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> User added unsuccessfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
+		}
+	}
+}
 
 ?>
 <!--
