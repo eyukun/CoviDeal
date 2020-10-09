@@ -83,20 +83,25 @@ function login() {
 		// determine position
 		switch ($_SESSION['position']) {
 			case 'tester': // tester
+				header("Location:FindPatient.php?position=tester");
     			echo "<script> window.location.assign('FindPatient.php'); </script>";
 				break;
 			case 'manager': // manager
 				if ($_SESSION['centreID'] == null){
+					header("Location:RegisterTestCentre.php?position=manager");
 					echo "<script> window.location.assign('RegisterTestCentre.php'); </script>";
 				}
 				else {
+					header("Location:RecordTester.php?position=manager");
 					echo "<script> window.location.assign('RecordTester.php'); </script>";
 				}
 				break;
 			case 'officer': // officer
+				header("Location:GenerateTestReport.php?position=officer");
 				echo "<script> window.location.assign('GenerateTestReport.php'); </script>";
 				break;
 			case 'patient': // patient
+				header("Location:ViewTestingHistory.php?position=patient");
 				echo "<script> window.location.assign('ViewTestingHistory.php'); </script>";
 				break;
 				
