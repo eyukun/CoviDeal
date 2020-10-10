@@ -17,9 +17,6 @@ session_start();
 // }
 
 // print the username on top of website
-if(isset($_SESSION['user_name'])){
-	echo "Welcome " . $_SESSION['user_name'] ;
-}
 
 // To decide which function
 if(isset($_POST['action_name'])) {
