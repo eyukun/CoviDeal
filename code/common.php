@@ -333,14 +333,14 @@ function registerTestKit(){
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
-	
+	//sql query for search patient with id
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
 	
 	
 	
-	
+	//if user not found
 	if($user == null)
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
@@ -366,7 +366,7 @@ function updatePatient()
 		//send testid to next page
 		$new_test_id = db_insert($create_test_id_sql);
 		
-		
+		//send message to user that test have been added success and go to next page
 		if ($user != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -375,6 +375,7 @@ function updatePatient()
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
 		}
+		//send message to user that test havent update 
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -407,9 +408,10 @@ function record_tester()
 		echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 	}
 	else{
-		//add the patient
+		//add the tester
 		$insert = "insert into user(username, password, name,position,centreID) values ('$username', '$password', '$name','tester','$centreID');";
 		$user = db_result($insert);
+		//tester added successfully
 		if ($user == true){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -417,6 +419,7 @@ function record_tester()
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
+		//tester added unsuccessfully
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -454,14 +457,14 @@ function recordPatient(){
 		//add the patient
 		$insert = "insert into user(username, password, name,position,patientType,symptoms,centreID) values ('$username', '$password', '$name','patient','$patientType','$symptoms','$centreID');";
 		$id = db_insert($insert);
-		
+		//sql query that insert value and create a test object
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
 								." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
 		
 		//send testid to next page
 		$new_test_id = db_insert($create_test_id_sql);
-		
+		//message that test added successfully
 		if ($user == null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -469,6 +472,7 @@ function recordPatient(){
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 		}
+		//error message that user added unsuccessfully
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
