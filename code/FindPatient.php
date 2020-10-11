@@ -270,7 +270,7 @@ Student ID: B1802197
 									<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="username"  pattern="[a-zA-Z ]+" maxlength = "20"
 									placeholder="Username" required>
-									<div class="invalid-feedback">Please enter the Username.</div><br>
+									<div class="invalid-feedback">Please enter the Username(Should Contain only Letter).</div><br>
 								</div>
 
 								<label for="password" class="col-sm-6 col-lg-4 col-form-label"> Password</label>
@@ -279,7 +279,7 @@ Student ID: B1802197
 									minlength="8"
 									maxlength = "20"
 									placeholder="Password" required>
-									<div class="invalid-feedback">Please enter the Password.</div><br>
+									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less then 8 letters]).</div><br>
 								</div>
 
 
@@ -288,7 +288,7 @@ Student ID: B1802197
 									<input type="text" class="form-control" name="name" pattern="[a-zA-Z ]+"
 									maxlength = "50"
 									placeholder="Full Name" required>
-									<div class="invalid-feedback">Please enter the Name.</div><br>
+									<div class="invalid-feedback">Please enter the Name(Should Contain only Letter).</div><br>
 								</div>
 								
 								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Patient Type</label>
