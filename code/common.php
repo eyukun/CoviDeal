@@ -379,7 +379,7 @@ function updatePatient()
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Centre updated unsuccessfully!</strong></div>';
+			<strong>New Test updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 		}
