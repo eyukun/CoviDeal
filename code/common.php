@@ -275,7 +275,7 @@ function updateTestKit(){
 		if ($testkit != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Test Kit Stock has been updated successfully!</strong></div>';
+			<strong>Test Kit ('.$kitID.') Stock has been updated successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
 		}
@@ -283,7 +283,7 @@ function updateTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Centre updated unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$kitID.') updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 		}
@@ -319,7 +319,7 @@ function registerTestKit(){
 		if ($testkit == true){
 				$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New test kit has been added successfully!</strong></div>';
+				<strong>New test kit ('.$testName.') has been added successfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -327,7 +327,7 @@ function registerTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit added unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testName.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -412,14 +412,14 @@ function record_tester()
 		if ($user == true){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New Tester has been added successfully!</strong></div>';
+				<strong>New Tester ('.$username.') has been added successfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> User added unsuccessfully!</strong></div>';
+			<strong> User ('.$username.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
@@ -483,7 +483,7 @@ function recordPatient(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> User added unsuccessfully!</strong></div>';
+			<strong> User ('.$username.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 		}
