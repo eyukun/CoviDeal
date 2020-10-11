@@ -423,7 +423,7 @@ function record_tester()
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> User added unsuccessfully!</strong></div>';
+			<strong> Tester added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
