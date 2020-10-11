@@ -228,7 +228,7 @@ function registerTestCentre(){
 				if ($user != null)	{
 					$error = '<div class="alert alert-success alert-dismissible fade show">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>New test centre has been added successfully!</strong></div>';
+					<strong>New test centre ('.$centreName.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					$_SESSION['centreID'] = $centreID;
 					echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
