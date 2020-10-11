@@ -16,7 +16,6 @@ session_start();
 // 	echo '<script> console.info("Session: \n' . $k . '") </script>';
 // }
 
-// print the username on top of website
 
 // To decide which function
 if(isset($_POST['action_name'])) {
@@ -84,23 +83,26 @@ function login() {
 		// determine position
 		switch ($_SESSION['position']) {
 			case 'tester': // tester
+				header("Location:FindPatient.php?position=tester");
     			echo "<script> window.location.assign('FindPatient.php'); </script>";
 				break;
 			case 'manager': // manager
 				if ($_SESSION['centreID'] == null){
+					header("Location:RegisterTestCentre.php?position=manager");
 					echo "<script> window.location.assign('RegisterTestCentre.php'); </script>";
 				}
 				else {
+					header("Location:RecordTester.php?position=manager");
 					echo "<script> window.location.assign('RecordTester.php'); </script>";
 				}
 				break;
 			case 'officer': // officer
+				header("Location:GenerateTestReport.php?position=officer");
 				echo "<script> window.location.assign('GenerateTestReport.php'); </script>";
 				break;
-			case 'null': // patient
-				if ($_SESSION['patient_type'] != null){
-					echo "<script> window.location.assign('ViewTestingHistory.php'); </script>";
-				}
+			case 'patient': // patient
+				header("Location:ViewTestingHistory.php?position=patient");
+				echo "<script> window.location.assign('ViewTestingHistory.php'); </script>";
 				break;
 				
 			default: // no well defined user
@@ -184,6 +186,7 @@ function registerTestCentre(){
 	//get the data from registerTestCentre.php
 	//prevent database error due to user's input
 	$centreName = $_POST['centreName'];
+	$address = $_POST['address'];
 	$sql = "SELECT * FROM testcentre WHERE centreName='$centreName'";
 	$id = $_SESSION["id"];
 	$centre = db_find($sql);
@@ -212,7 +215,7 @@ function registerTestCentre(){
 		}
 		else {
 			//add the test centre
-			$insert = "insert into testcentre(centreName, id) values ('$centreName', '$id');";
+			$insert = "insert into testcentre(centreName, address, id) values ('$centreName', '$address', '$id');";
 			$centre = db_result($insert);
 			if ($centre == true){
 				$sql1 = "SELECT * FROM testcentre WHERE centreName='$centreName'";
@@ -225,7 +228,7 @@ function registerTestCentre(){
 				if ($user != null)	{
 					$error = '<div class="alert alert-success alert-dismissible fade show">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>New test centre has been added successfully!</strong></div>';
+					<strong>New test centre ('.$centreName.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					$_SESSION['centreID'] = $centreID;
 					echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
@@ -272,7 +275,7 @@ function updateTestKit(){
 		if ($testkit != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Test Kit Stock has been updated successfully!</strong></div>';
+			<strong>Test Kit ('.$kitID.') Stock has been updated successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
 		}
@@ -280,7 +283,7 @@ function updateTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Centre updated unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$kitID.') updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 		}
@@ -316,7 +319,7 @@ function registerTestKit(){
 		if ($testkit == true){
 				$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New test kit has been added successfully!</strong></div>';
+				<strong>New test kit ('.$testName.') has been added successfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -324,7 +327,7 @@ function registerTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit added unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testName.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -333,14 +336,11 @@ function registerTestKit(){
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
-	//sql query for search patient with id
+	
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
 	
-	
-	
-	//if user not found
 	if($user == null)
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
@@ -360,28 +360,26 @@ function updatePatient()
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-								." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+								." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
 		
 		
 		//send testid to next page
 		$new_test_id = db_insert($create_test_id_sql);
-		
-		//send message to user that test have been added success and go to next page
-		if ($user != null){
+		$updateStock = "UPDATE testkit SET availableStock=availableStock-1 WHERE kitID='$kitID'";
+		$res1 = db_result($updateStock);
+		if ($res1 == null){
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Stock not enough !</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
+		}
+		else {
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>New Test has been added successfully!</strong></div>';
-				$_SESSION['error'] = $error;
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";											
-		}
-		//send message to user that test havent update 
-		else {
-			$error = '<div class="alert alert-danger alert-dismissible fade show">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>New Test updated unsuccessfully!</strong></div>';
-			$_SESSION['error'] = $error;
-			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 		}
 	}
 }
@@ -394,7 +392,7 @@ function record_tester()
 	$name = $_POST['name'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username'";
+	$sql = "SELECT * FROM user WHERE username='$username' AND centreID='$centreID'";
 	$user = db_find($sql);
 
 
@@ -408,22 +406,20 @@ function record_tester()
 		echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 	}
 	else{
-		//add the tester
+		//add the patient
 		$insert = "insert into user(username, password, name,position,centreID) values ('$username', '$password', '$name','tester','$centreID');";
 		$user = db_result($insert);
-		//tester added successfully
 		if ($user == true){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New Tester has been added successfully!</strong></div>';
+				<strong>New Tester ('.$username.') has been added successfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
-		//tester added unsuccessfully
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Tester added unsuccessfully!</strong></div>';
+			<strong> User ('.$username.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/RecordTester.php'; </script>";
 		}
@@ -440,7 +436,7 @@ function recordPatient(){
 	$symptoms = $_POST['symptoms'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username'";
+	$sql = "SELECT * FROM user WHERE username='$username' AND centreID='$centreID'";
 	$user = db_find($sql);
 
 
@@ -455,52 +451,45 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,position,patientType,symptoms,centreID) values ('$username', '$password', '$name','patient','$patientType','$symptoms','$centreID');";
+		$insert = "insert into user(username, password, name,position,patientType,symptoms) values ('$username', '$password', '$name','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
-		//sql query that insert value and create a test object
-		$kitID=$_POST['kitID'];
-		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-								." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
 		
-		//send testid to next page
-		$new_test_id = db_insert($create_test_id_sql);
-		//message that test added successfully
-		if ($user == null){
-			$error = '<div class="alert alert-success alert-dismissible fade show">
+		// if patient created success
+		if ($id != null){
+			$kitID=$_POST['kitID'];
+			$updateStock = "UPDATE testkit SET availableStock=availableStock-1 WHERE kitID='$kitID'";
+			$res1 = db_result($updateStock);
+			if ($res1 == null){
+				$error = '<div class="alert alert-danger alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New Test has been added successfully!</strong></div>';
+				<strong> Stock not enough !</strong></div>';
 				$_SESSION['error'] = $error;
-				echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
+				echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
+			}
+			else {
+				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
+										." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+				
+				//send testid to next page
+				$new_test_id = db_insert($create_test_id_sql);
+				
+				$error = '<div class="alert alert-success alert-dismissible fade show">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>New Test has been added successfully!</strong></div>';
+					$_SESSION['error'] = $error;
+					echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
+			}
 		}
-		//error message that user added unsuccessfully
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> User added unsuccessfully!</strong></div>';
+			<strong> User ('.$username.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 		}
 	}
 }
-//to find out patient from data base by using id
-function find_patient(){
-	$sql = "SELECT * FROM users where username = '" . $_POST['id'];
-	$user = db_find($sql);
-	if($user->user_id){ //authentication success, save in session
 
-		$_SESSION['user_id']     = $user->id;
-		$_SESSION['username']    = $user->username;
-		$_SESSION['user_name']   = $user->name;
-		$_SESSION['position'] = $user->position;
-		$_SESSIOM['centreID']=$user->centreID;
-		echo "<script> window.location.assign('UpdatePatient.php'); </script>";
-	}
-	else{//not found
-		echo "<script> window.location.assign('RecordPatient.php'); </script>";
-		
-	}
-
-}
 ?>
 <!--
 Student Name: Eyu Kun
