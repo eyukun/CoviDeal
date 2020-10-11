@@ -145,6 +145,7 @@ Student ID: B1802197
 			<input type="submit" class="btn btn-primary" name="Done" value="Done">
 		</div>
 		</form>
+	</div>
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
