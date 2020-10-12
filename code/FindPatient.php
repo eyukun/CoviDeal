@@ -280,7 +280,7 @@ Student ID: B1802197
 									minlength="8"
 									maxlength = "20"
 									placeholder="Password" required>
-									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less then 8 letters]).</div><br>
+									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less than 8 letters]).</div><br>
 								</div>
 
 
