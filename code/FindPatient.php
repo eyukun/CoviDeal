@@ -198,25 +198,27 @@ Student ID: B1802197
 											<input type="text" class="form-control" name="username" value="<?php echo $row['username'];?>" readonly><br>
 										</div>
 										
-										<label for="patientType" class="col-sm-6 col-lg-4 col-form-label"> PatientType </label>
-										<div class="col-sm-12 col-lg-8">
-										<select name="patientType" id="patientType" class="form-control" >
-												<option value="Returnee">Returnee</option>
-												<option value="Quarantined">Quarantined</option>
-												<option value="Close Contact">CloseContact</option>
-												<option value="Infected">Infected</option>
-												<option value="Suspected">Suspected</option>
-											</select><br>
-										</div>
-										<label for="name"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="symptoms"
-											maxlength = "50" pattern="[a-zA-Z ]+"
-											placeholder="Symptoms of the Patient" required>
-											<div class="invalid-feedback">Please enter the Symptoms.</div><br>
-										</div>
 										
-										<label for="kitID"class="col-sm-6 col-lg-4 col-form-label">KITID</label>
+								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Patient Type</label>
+								<div class="col-sm-12 col-lg-8">
+								<select name="patientType" id="patientType" class="form-control">
+									<option value="Returnee">Returnee</option>
+									<option value="Quarantine">Quarantine</option>
+									<option value="Close Contact">Close Contact</option>
+									<option value="Infected">Infected</option>
+									<option value="Suspected">Suspected</option>
+									
+								</select>
+								<br>
+								</div>
+								<label for="name"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
+								<div class="col-sm-12 col-lg-8">
+									<input type="text" class="form-control" name="symptoms"
+									maxlength = "50"
+									placeholder="Symptoms of the Patient" required>
+									<div class="invalid-feedback">Please enter the Symptoms.</div><br>
+								</div>
+								<label for="kitID"class="col-sm-6 col-lg-4 col-form-label">KITID</label>
 										<div class="col-sm-12 col-lg-8">
 											
 											<select name="kitID" class="form-control" >
@@ -280,7 +282,7 @@ Student ID: B1802197
 									minlength="8"
 									maxlength = "20"
 									placeholder="Password" required>
-									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less than 8 letters]).</div><br>
+									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less thasn 8 letters]).</div><br>
 								</div>
 
 
