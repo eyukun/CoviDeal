@@ -11,14 +11,16 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/manageTestKit.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
-	
+		<!-- javascript source !-->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="js/manageTestKit.js"></script>
   </head>
 
  <body>
@@ -75,25 +77,23 @@ Student ID: B1802197
 					<div>
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Add a New Tester</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
 						</div>
 						<div class="modal-body">
+							<div class="form-group">
+								<div class="col-lg-12">
+									<?php
+									if (isset($_SESSION['error'])) {
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);} ?>
+								</div>
+							</div>
 							<div class="form-group row">
 								<!-- <div id="error"> -->
-									<div id="" class="m-b-16" style="color:red">
-										<span class="">
-											<?php echo isset($_SESSION['error']) ? $_SESSION['error'] : ""; ?>
-											<br>
-											<!-- Error msg goes here -->
-										</span>
-									</div>
 								<label for="username"class="col-sm-6 col-lg-12 col-form-label"> Username</label>
 								<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="username"  pattern="[a-zA-Z ]+" maxlength = "20"
-									placeholder="Username" required>
-									<div class="invalid-feedback">Please enter the Username(Should Contain only Letter).</div><br>
+									placeholder="Username" title="Please enter a username contains only letters." required>
+									<div class="invalid-feedback">Please enter the Username.</div><br>
 								</div>
 
 								<label for="password" class="col-sm-6 col-lg-12 col-form-label"> Password</label>
@@ -101,8 +101,8 @@ Student ID: B1802197
 									<input type="password" class="form-control" name="password" pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
 									minlength="8"
 									maxlength = "20"
-									placeholder="Password" required>
-									<div class="invalid-feedback">Please enter the Password(Format[a-z,A-Z,can contain number, total should not less then 8 letters]).</div><br>
+									placeholder="Password" title="Please enter a password contains at least one number and one letter, and at least 8 or more characters." required>
+									<div class="invalid-feedback">Please enter the Password.</div><br>
 								</div>
 
 
@@ -110,11 +110,12 @@ Student ID: B1802197
 								<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="name"  pattern="[a-zA-Z ]+"
 									maxlength = "50"
-									placeholder="Full Name" required>
-									<div class="invalid-feedback">Please enter the Name(Should Contain only Letters).</div><br>
+									placeholder="Full Name" title="Please enter a name contains only letters." required>
+									<div class="invalid-feedback">Please enter the Name.</div><br>
 								</div>
 							</div>
 						</div>
+						
 						 <!--go to common.php to record new tester!-->
 						<div class="modal-footer">
 							<input name="action_name" value ="record_tester" hidden>
@@ -136,6 +137,7 @@ Student ID: B1802197
 	
 	<!-- footer !-->
 	  <!-- Site footer -->
+     <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
         <div class="row">
@@ -146,14 +148,15 @@ Student ID: B1802197
 
           <div class="col-md-4 col-sm-6 col-xs-12">
             <ul class="social-icons">
-              <li><a class="facebook" target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
-              <li><a class="twitter" target="_blank" href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
-              <li><a class="instagram" target="_blank" href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
-			  <li><a class="email" target="_blank" href="https://www.outlook.com"><i class="fa fa-envelope"></i></a></li>			  
+              <li><a class="button" target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
+              <li><a class="button" target="_blank" href="https://www.twitter.com"><i class="fa fa-twitter"></i></a></li>
+              <li><a class="button" target="_blank" href="https://www.instagram.com"><i class="fa fa-instagram"></i></a></li>
+			  <li><a class="button" target="_blank" href="https://www.outlook.com"><i class="fa fa-envelope"></i></a></li>			  
             </ul>
           </div>
         </div>
       </div>
+	</footer>
 </footer>
 	
 </body>
