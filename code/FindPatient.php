@@ -116,7 +116,8 @@ Student ID: B1802197
 		//use table
 		$userTable = "use user";
 		$conn->query($userTable);
-	    $sql = "SELECT * FROM user where position='patient'";
+		$centreID = $_SESSION["centreID"];
+	    $sql = "SELECT * FROM user where position='patient'AND centreID='$centreID'";
 		
 		$check = new mysqli("localhost","root","", "covideal");
 		if ($check->connect_error){
