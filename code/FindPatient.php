@@ -6,7 +6,7 @@ Student ID: B1802197
 <!DOCTYPE html>
  <html lang="en">
  <head>
-    
+     <!--link for boostrap!-->
 	 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,6 +20,7 @@ Student ID: B1802197
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/manageTestKit.js"></script>
+	 <!--java script!-->
 	<script>
 		function searchPatient() {
 		  var input, filter, table, tr, td, i, txtValue;
@@ -59,12 +60,7 @@ Student ID: B1802197
          </li>
 		
          <li class="nav-item pill-3">
-             <a 
-			 <?php if(isset($_SESSION['testID']) != null){ ?> href="#" title="Please Register a Test First!" 
-			 class="nav-link text-secondary"
-			 <?php }
-			 else { ?> class="nav-link" href="FindTest.php" <?php } ?>
-			 > Update Test Result</a>
+             <a class="nav-link" href="UpdateTestResult.php"> Update Test Result</a>
          </li>
  	   </ul>
  			
@@ -80,7 +76,7 @@ Student ID: B1802197
    <!-- container !-->
   <div class = "container" id = "box">
 	<div>
-	  <h1 class="display-4">Manage Patient</h1>
+	  <h1 class="display-4">Record New Test</h1>
 	  <hr class="my-4">
 	  <p style="font-size:20px;"> Manage or Register for a Patient</p><br>
 	</div>	
@@ -90,13 +86,15 @@ Student ID: B1802197
 			 <form class="form-inline">
 				<i class="fa fa-search" aria-hidden="true" 
 				style="margin-right: 6px;"></i>
-			   <input class="form-control" id="filter" type="number" min="1"
+			   <input class="form-control" id="filter" 
+			   type="number" min="1" style="width: 400px;"
 			   placeholder="Search by PatientID" onkeyup="searchPatient()">
 			 </form>	
 		 </div>
 	 </div>
 	 </hr>
 	<div class="form-group">
+	 <!--error message!-->
 		<div class="col-lg-12">
 			<?php
 			if (isset($_SESSION['error'])) {
@@ -119,6 +117,7 @@ Student ID: B1802197
 		$centreID = $_SESSION["centreID"];
 	    $sql = "SELECT * FROM user where position='patient'AND centreID='$centreID'";
 		
+		//testkit table
 		$check = new mysqli("localhost","root","", "covideal");
 		if ($check->connect_error){
 			die("Connection failure: " . mysqli_connect_error());
@@ -126,7 +125,7 @@ Student ID: B1802197
 		
 		$testkitTable="use testkit";
 		$check->query($testkitTable);
-		$test="SELECT kitid,testname FROM testkit ";
+		$test="SELECT kitid,testname FROM testkit where availableStock > 0 AND centreID='".$_SESSION['centreID']."'";
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
@@ -140,11 +139,11 @@ Student ID: B1802197
 		
 		//if material table dont have data, display the message
 		if (mysqli_num_rows($resultset) == 0) { ?>
-			<h5>There are no Patient currently, please add one!</h5>
+			<h3>There are no Patient currently, please add one!</h3>
 		<?php //if have materials
 		} else {
 		?>
-		<h5>Patient Table</h5>
+		<h3>Patient Table</h3>
 		<!-- list of all patient !-->
 		<table class="table table-borderless" id="patientTable">
 			  <thead>
@@ -158,6 +157,7 @@ Student ID: B1802197
 				</tr>
 			  </thead>
 			  <tbody>
+			   <!--table for patient details!-->
 			  <?php
 			  while($row = mysqli_fetch_array($resultset)):
 			  ?>
@@ -181,7 +181,7 @@ Student ID: B1802197
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Update Patient</h5>
+									<h5 class="modal-title" id="exampleModalLongTitle">Update Patient & Record New Test</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -197,7 +197,6 @@ Student ID: B1802197
 										<div class="col-sm-12 col-lg-8">
 											<input type="text" class="form-control" name="username" value="<?php echo $row['username'];?>" readonly><br>
 										</div>
-										
 										
 								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Patient Type</label>
 								<div class="col-sm-12 col-lg-8">
@@ -226,7 +225,7 @@ Student ID: B1802197
 												
 													foreach($testkit_row  as $i => $v) :
 												?>
-												<option value="<?php echo $i ?>"><?php echo $i."   ".$v;?></option>
+												<option value="<?php echo $i ?>"><?php echo $i.":  ".$v;?></option>
 												<?php endforeach ?>
 											</select>
 										</div>
@@ -234,6 +233,7 @@ Student ID: B1802197
 									</div>
 								</div>
 								<div class="modal-footer">
+								 <!--submit and go to common.php!-->
 									<input name="action_name" value="updatePatient" hidden>
 									<input type="submit" class="btn btn-primary" name="submit" value="Update">
 								</div>
@@ -247,6 +247,7 @@ Student ID: B1802197
 		<?php } ?>
 			<br><br>
 			<div>
+			 <!--button for register new patient!-->
 				  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
 				  data-target="#recordPatientModal"> Register </button>
 			</div>
@@ -262,7 +263,7 @@ Student ID: B1802197
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">RecordPatient</h5>
+								<h5 class="modal-title" id="exampleModalLongTitle">Record Patient & Record New Test</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -306,13 +307,14 @@ Student ID: B1802197
 								</select>
 								<br>
 								</div>
-								<label for="name"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
+								<label for="symptoms"class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
 								<div class="col-sm-12 col-lg-8">
 									<input type="text" class="form-control" name="symptoms"
 									maxlength = "50"
 									placeholder="Symptoms of the Patient" required>
 									<div class="invalid-feedback">Please enter the Symptoms.</div><br>
 								</div>
+								
 								<label for="kitID"class="col-sm-6 col-lg-4 col-form-label">KITID</label>
 										<div class="col-sm-12 col-lg-8">
 											
@@ -321,12 +323,13 @@ Student ID: B1802197
 												
 													foreach($testkit_row  as $i => $v) :
 												?>
-												<option value="<?php echo $i ?>"><?php echo $i."   ".$v;?></option>
+												<option value="<?php echo $i ?>"><?php echo $i.":   ".$v;?></option>
 												<?php endforeach ?>
 											</select>
 										</div>
 								</div>
 							</div>
+							 <!--go to common.php!-->
 							<div class="modal-footer">
 								<input name="action_name" value="recordPatient" hidden>
 								<input type="submit" class="btn btn-primary" name="submit" value="Register">
