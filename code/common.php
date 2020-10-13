@@ -451,7 +451,7 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,position,patientType,symptoms,centreID) values ('$username', '$password', '$name','patient','$patientType','$symptoms','$centreID');";
+		$insert = "insert into user(username, password, name,position,patientType,symptoms) values ('$username', '$password', '$name','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
 		
 		// if patient created success
