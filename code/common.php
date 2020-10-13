@@ -392,7 +392,7 @@ function record_tester()
 	$name = $_POST['name'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username'";
+	$sql = "SELECT * FROM user WHERE username='$username' AND centreID='$centreID'";
 	$user = db_find($sql);
 
 
@@ -436,7 +436,7 @@ function recordPatient(){
 	$symptoms = $_POST['symptoms'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username'";
+	$sql = "SELECT * FROM user WHERE username='$username' ";
 	$user = db_find($sql);
 
 
