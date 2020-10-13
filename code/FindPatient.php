@@ -175,7 +175,7 @@ Student ID: B1802197
 				</tr>				
 			  
 				<!-- Update Test Kit Stock Modal !-->
-				<form action="common.php" method="POST" class="needs-validation" novalidate>
+				<form action="common.php" method="POST">
 					<div class="modal fade" id="updatePatientModal<?php echo $row['id'];?>"
 					tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
