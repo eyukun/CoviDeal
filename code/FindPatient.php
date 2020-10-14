@@ -145,12 +145,13 @@ Student ID: B1802197
 		?>
 		<h3>Patient Table</h3>
 		<!-- list of all patient !-->
-		<table class="table table-borderless" id="patientTable">
+		<table class="table table-borderless" id="patientTable" style="width:60%">
 			  <thead>
 				<tr class="thead-dark">
 				  <th class="text-center">UserID</th>
 				  <th class="text-center">Username</th>
 				  <th class="text-center">Name</th>
+				  <th class="text-center">Nation</th>
 				  <th class="text-center">PatientType</th>
 				  <th class="text-center">Symptoms</th>
 				  <th></th>
@@ -165,6 +166,7 @@ Student ID: B1802197
 				  <td align="center"><?php echo $row['id'];?></td>
 				  <td align="center"><?php echo $row['username'];?></td>
 				  <td align="center"><?php echo $row['name'];?></td>
+				  <td align="center"><?php echo $row['nation'];?></td>
 				  <td align="center"><?php echo $row['patientType'];?></td>
 				  <td align="center"><?php echo $row['symptoms'];?></td>
 				  <td align="middle">
@@ -175,7 +177,7 @@ Student ID: B1802197
 				</tr>				
 			  
 				<!-- Update Test Kit Stock Modal !-->
-				<form action="common.php" method="POST" class="needs-validation" novalidate>
+				<form action="common.php" method="POST">
 					<div class="modal fade" id="updatePatientModal<?php echo $row['id'];?>"
 					tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
@@ -294,7 +296,14 @@ Student ID: B1802197
 									placeholder="Full Name" required>
 									<div class="invalid-feedback">Please enter the Name(Should Contain only Letter).</div><br>
 								</div>
-								
+								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Nation</label>
+								<div class="col-sm-12 col-lg-8">
+								<select name="nation" id="nation" class="form-control">
+									<option value="Local">Local</option>
+									<option value="International">International</option>
+								</select>
+								<br>
+								</div>
 								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Patient Type</label>
 								<div class="col-sm-12 col-lg-8">
 								<select name="patientType" id="patientType" class="form-control">
