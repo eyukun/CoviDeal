@@ -237,7 +237,7 @@ function registerTestCentre(){
 			else {
 				$error = '<div class="alert alert-danger alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong> Test Centre added unsuccessfully!</strong></div>';
+				<strong> Test Centre ('.$centreName.') added unsuccessfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
 			}
@@ -250,6 +250,7 @@ function updateTestKit(){
 	
 	// get kitID from update form
 	$kitID = $_POST['kitID'];
+	$testName = $_POST['testName'];
 	$sql = "SELECT * FROM testkit WHERE kitID='$kitID' AND centreID='".$_SESSION['centreID']."'" ;
 	$testkit = db_find($sql);
 	
@@ -258,7 +259,7 @@ function updateTestKit(){
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Error occurs! ' . $kitID . ' (Test Kit) is not found.</strong></div>';
+		<strong>Error occurs! ' . $testName . ' (Test Kit) is not found.</strong></div>';
 		$_SESSION['error'] = $error;
 		echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 	}
@@ -275,7 +276,7 @@ function updateTestKit(){
 		if ($testkit != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Test Kit ('.$kitID.') Stock has been updated successfully!</strong></div>';
+			<strong>Test Kit ('.$testName.') Stock has been updated successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
 		}
@@ -283,7 +284,7 @@ function updateTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit ('.$kitID.') updated unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testName.') updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 		}
