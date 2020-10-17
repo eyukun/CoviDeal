@@ -103,7 +103,7 @@ Student ID: B1802197
 		</div>
 	</div>
 	
-	<!-- display the list of test kit !-->
+	<!-- display the list of patient !-->
 	<?php
 	//connect to mysql
 		$conn = new mysqli("localhost","root","", "covideal");
@@ -111,7 +111,7 @@ Student ID: B1802197
 			die("Connection failure: " . mysqli_connect_error());
 		}
 		
-		//use table
+		//user table
 		$userTable = "use user";
 		$conn->query($userTable);
 		$centreID = $_SESSION["centreID"];
