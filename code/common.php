@@ -435,7 +435,6 @@ function recordPatient(){
 	$nation=$_POST['nation'];
 	$patientType = $_POST['patientType'];
 	$symptoms = $_POST['symptoms'];
-	$centreID = $_SESSION["centreID"];
 	
 	$sql = "SELECT * FROM user WHERE username='$username' ";
 	$user = db_find($sql);
@@ -452,7 +451,7 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,nation,position,patientType,symptoms,centreID) values ('$username', '$password', '$name','$nation','patient','$patientType','$symptoms','$centreID');";
+		$insert = "insert into user(username, password, name,nation,position,patientType,symptoms) values ('$username', '$password', '$name','$nation','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
 		
 		// if patient created success
