@@ -122,15 +122,15 @@ Student ID: B1900083
 							<div class="form-group row">
 								<label for="centreName" class="col-sm-6 col-lg-4 col-form-label"> Centre Name</label>
 								<div class="col-sm-12 col-lg-8">
-									<input type="text" pattern="[a-zA-Z ]+"
+									<input type="text" pattern="^.*[a-zA-Z]+.*"
 									class="form-control" name="centreName" required>
-									<div class="invalid-feedback">Please enter a centre name contains only letters.</div><br>
+									<div class="invalid-feedback">Please enter a centre name contains at least one letter.</div><br>
 								</div>
 								<label for="address" class="col-sm-6 col-lg-4 col-form-label"> Address </label>
 								<div class="col-sm-12 col-lg-8">
-									<input type="text"
+									<input type="text" pattern="^.*[a-zA-Z]+.*"
 									class="form-control" name="address" required>
-									<div class="invalid-feedback">Please enter an address.</div><br>
+									<div class="invalid-feedback">Please enter an address contains at least one letter.</div><br>
 								</div>
 							</div>
 						</div>

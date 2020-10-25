@@ -253,9 +253,9 @@ Student ID: B1900083
 									<div class="form-group row">
 										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
 										<div class="col-sm-12 col-lg-8">
-											<input type="text" pattern="[a-zA-Z ]+"
+											<input type="text" pattern="^.*[a-zA-Z]+.*"
 											class="form-control" name="testName" required>
-											<div class="invalid-feedback">Please enter a test name contains only letters.</div><br>
+											<div class="invalid-feedback">Please enter a test name contains at least one letter.</div><br>
 										</div>
 							
 										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
