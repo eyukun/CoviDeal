@@ -79,6 +79,14 @@ function login() {
 		$_SESSION['position'] = $user->position;
 		$_SESSION['patient_type'] = $user->patientType;
 		$_SESSION['centreID'] = $user->centreID;
+		
+		// if is a patient, centreID will be null
+		// if the manager hasn't register a centre yet, centreID will be null too
+		if ($_SESSION['centreID'] != null){
+			$sql1 = "SELECT * FROM testcentre where centreID = '". $_SESSION['centreID']."'";
+			$centre = db_find($sql1);
+			$_SESSION['centreName'] = $centre->centreName;
+		}
 
 		// determine position
 		switch ($_SESSION['position']) {
@@ -231,6 +239,7 @@ function registerTestCentre(){
 					<strong>New test centre ('.$centreName.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					$_SESSION['centreID'] = $centreID;
+					$_SESSION["centreName"] = $centreName;
 					echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
 				}
 			}

@@ -14,7 +14,7 @@ Student ID: B1900083
 	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/manageTestKit.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -22,31 +22,12 @@ Student ID: B1900083
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/ManageTestKit.js"></script>
-	
-	<!-- javascript for search bar !-->
-	<script>
-		function searchTestKit() {			
-			var input, filter, tr, table, td, i, txtValue;
-			input = document.getElementById("filter");
-			filter = input.value.toUpperCase();
-			table = document.getElementById("testkitTable");
-			tr = table.getElementsByTagName("tr");
-			for (i = 0; i < tr.length; i++) {
-				td = tr[i].getElementsByTagName("td")[1];
-				if (td){
-					txtValue = td.textContent || td.innerText;
-					if (txtValue.toUpperCase().indexOf(filter) > -1) {
-						tr[i].style.display = "";
-					} else {
-						tr[i].style.display = "none";
-					}
-				}
-			}
-		}
-	</script>
+
  </head>
 
  <body>
@@ -59,9 +40,26 @@ Student ID: B1900083
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		   <ul class="nav nav-pills" role="tablist">
-				 <li class="nav-item pill-1">
-					<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
-				 </li>
+			 <li class="nav-item pill-1">
+				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
+			 </li>
+			 <li>
+				<!-- User profile icon !-->
+			   <div class="dropdown" style="margin: -5px;">
+					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
+					   <a class="navbar-brand" href="javascript:void(0);">
+					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)" ></i>
+					   </a>
+				   </button>
+				   <!-- Dropdown options !-->
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
+						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
+					</div>
+				</div>
+			</li>
 			 <li class="nav-item pill-2">
 				 <a 
 				 <?php if(isset($_SESSION['centreID']) != null){ ?> class="nav-link text-secondary" 
@@ -87,35 +85,31 @@ Student ID: B1900083
 		   </ul>
 				
 			<ul class="navbar-nav mr-auto">
-		   </ul>
+		   </ul>	
+		   
 		   <a class="navbar-brand" href="index.php" style="font-family:cursive; color: white;"><i class="fa fa-sign-out"></i>Sign out</a>
 		  
 		</div>
    </nav>
+   <br>
+   <br>
 		   <!-- container !-->
 		   <!-- website details !-->
-		  <div class = "container" id = "box">
-			<div class="row">
+		<div class = "container">
+			<div class="row" id = "box">
 				<div class="col-lg-12">
-				  <h1 class="display-4">Manage Test Kit Stock</h1>
-				  <hr class="my-4">
-				  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
-				 </div>
-				 <hr>
+					<div class="jumbotron">
+					  <h1 class="display-4">Manage Test Kit Stock</h1>
+					  <hr class="my-4">
+					  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
+						<p class="lead">
+						  <!-- register button to register a new test kit !-->
+						  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
+						  data-target="#registerTestKitModal"> Register </button>
+						</p>
+					 </div>
+				</div>
 			</div>	
-			
-			<!-- search bar !-->
-			 <div class="row align-items-center">
-				<div class="mx-auto">
-					 <form class="form-inline">
-						<i class="fa fa-search" aria-hidden="true" 
-						style="margin-right: 6px;"></i>
-				   <input class="form-control" style="width: 400px;"
-				   id="filter" type="text"
-				   placeholder="Search by Test Name" onkeyup="searchTestKit()">
-				 </form>	
-			 </div>
-		 </div>
 		 <hr>
 		 
 		 <!-- error message here !-->
@@ -127,7 +121,23 @@ Student ID: B1900083
 					unset($_SESSION['error']);} ?>
 			</div>
 		</div>
+		<br>
 		
+	<div class="col-lg-12">
+        <div id="box">
+			<!-- search bar !-->
+			 <div class="row align-items-center">
+				<div class="mx-auto">
+					 <form class="form-inline">
+						<i class="fa fa-search" aria-hidden="true" 
+						style="margin-right: 6px;"></i>
+				   <input class="form-control" style="width: 400px;"
+				   id="filter" type="text"
+				   placeholder="Search by Test Name" onkeyup="searchTestKit()">
+				 </form>	
+			 </div>
+			</div>
+		<br>
 		<!-- display the list of test kit !-->
 		<?php
 		//connect to mysql
@@ -152,7 +162,8 @@ Student ID: B1900083
 			?>
 			<h3>Test Kit Table</h3>
 			<!-- list of all test kit !-->
-			<table class="table table-borderless" id="testkitTable">
+			<table class="table table-borderless table-secondary" id="testkitTable">
+				<form class="form-control">
 				  <thead>
 					<tr class="thead-dark">
 					  <th class="text-center">KitID</th>
@@ -223,21 +234,19 @@ Student ID: B1900083
 				</form>
 				<?php endwhile;?>
 				</tbody>
+			  </form>
 			</table>
 			<?php } ?>
 				<br><br>
-				<div>
-					<!-- register button to register a new test kit !-->
-					  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
-					  data-target="#registerTestKitModal"> Register </button>
-				</div>
 				<br>
 		   </div>  
-			<br><br><br>
 			
 			
-			
-			<!-- Register Test Kit Modal !-->
+			</div>
+		</div>
+		<br><br><br><br>
+		
+		<!-- Register Test Kit Modal !-->
 				<form action="common.php" method="POST" class="needs-validation" novalidate>
 					<div class="modal fade" id="registerTestKitModal" tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
@@ -275,6 +284,7 @@ Student ID: B1900083
 						</div>
 					</div>
 				</form>
+				
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
@@ -295,7 +305,31 @@ Student ID: B1900083
         </div>
       </div>
 	</footer>
-	
+	<!-- javascript for search bar !-->
+	<script>
+		function searchTestKit() {			
+			var input, filter, tr, table, td, i, txtValue;
+			input = document.getElementById("filter");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("testkitTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td){
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+		
+		function dropdown(x) {  
+            x.classList.toggle("fa fa-fw fa-user-circle");  
+        }  
+	</script>
 </body>
 </html>
 <!--
