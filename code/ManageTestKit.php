@@ -51,7 +51,7 @@ Student ID: B1900083
 			 <li class="nav-item pill-1">
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
-			 <li id="dropdown">
+			 <li>
 				<!-- User profile icon !-->
 			   <div class="dropdown">
 					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
