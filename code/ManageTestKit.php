@@ -27,6 +27,14 @@ Student ID: B1900083
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/ManageTestKit.js"></script>
+	
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
+	
+	</style>
 
  </head>
 
@@ -43,12 +51,13 @@ Student ID: B1900083
 			 <li class="nav-item pill-1">
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
-			 <li>
+			 <li id="dropdown">
 				<!-- User profile icon !-->
-			   <div class="dropdown" style="margin: -5px;">
+			   <div class="dropdown">
 					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
 					   <a class="navbar-brand" href="javascript:void(0);">
 					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)" ></i>
+					   Hi, <?php echo $_SESSION["username"]; ?>
 					   </a>
 				   </button>
 				   <!-- Dropdown options !-->
