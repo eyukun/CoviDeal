@@ -25,7 +25,13 @@ Student ID: B1900083
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/registerTestCentre.js"></script>
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
 	
+	</style>
   </head>
 
  <body>
@@ -45,10 +51,11 @@ Student ID: B1900083
 			 
 			 <li>
 				<!-- User profile icon !-->
-			   <div class="dropdown" style="margin: -5px;">
+			   <div class="dropdown">
 					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
 					   <a class="navbar-brand" href="javascript:void(0);">
-					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)" ></i>
+					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)"></i>
+					   Hi, <?php echo $_SESSION["username"]; ?>
 					   </a>
 				   </button>
 				   <!-- Dropdown options !-->
