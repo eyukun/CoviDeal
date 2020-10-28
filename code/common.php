@@ -54,6 +54,11 @@ if(isset($_POST['action_name'])) {
 		case'updatePatient':
 			updatePatient();
 			break;
+			
+		// update test result function
+		case 'updateTest':
+			updateTest();
+			break;
 
 		// others...
 		default:
@@ -370,7 +375,7 @@ function updatePatient()
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-								." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+								." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
 		
 		
 		//send testid to next page
@@ -478,7 +483,7 @@ function recordPatient(){
 			}
 			else {
 				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-										." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+										." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
 				
 				//send testid to next page
 				$new_test_id = db_insert($create_test_id_sql);
@@ -496,6 +501,49 @@ function recordPatient(){
 			<strong> User ('.$username.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
+		}
+	}
+}
+
+// update test function
+function updateTest(){
+	
+	// get kitID from update form
+	$testID = $_POST['testID'];
+	$sql = "SELECT * FROM test WHERE testID='$testID'";
+	$test = db_find($sql);
+	
+	// if the test not found
+	if($test == null)
+	{
+		$error = '<div class="alert alert-danger alert-dismissible fade show">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Error occurs! ' . $testID . ' (Test) is not found.</strong></div>';
+		$_SESSION['error'] = $error;
+		echo "<script type='text/javascript'> window.location = '/code/UpdateTestResult.php'; </script>";
+	}
+	
+	// if the test found
+	else {
+		// update the status of test
+		$updatedResult = $_POST['result'];
+		$update = "UPDATE test SET result='$updatedResult', resultDate=now(), status='complete' WHERE testID='$testID'";
+		$test = db_result($update);
+		// update success
+		if ($test != null){
+			$error = '<div class="alert alert-success alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>Test Result('.$testID.') has been updated successfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/TestResult.php?test_id=".$testID."'; </script>";											
+		}
+		// update failed
+		else {
+			$error = '<div class="alert alert-danger alert-dismissible fade show">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong> Test Result ('.$testID.') updated unsuccessfully!</strong></div>';
+			$_SESSION['error'] = $error;
+			echo "<script type='text/javascript'> window.location = '/code/UpdateTestResult.php'; </script>";
 		}
 	}
 }
