@@ -128,7 +128,7 @@ Student ID: B1900083
 						<i class="fa fa-search" aria-hidden="true" 
 						style="margin-right: 6px;"></i>
 				   <input class="form-control" style="width: 400px;"
-				   id="filter" type="text"
+				   id="filter" type="number"
 				   placeholder="Search by Patient ID" onkeyup="searchPatient()">
 				 </form>	
 			 </div>
