@@ -26,6 +26,13 @@ Student ID: B1900083
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/ManageTestKit.js"></script>
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
+	
+	</style>
   </head>
 
  <body>
@@ -98,7 +105,8 @@ Student ID: B1900083
 		</div>
 		<br>
 	 
-   
+   <div class="col-lg-12">
+		<div id="box">
    <!-- list of all tests for this patient!-->
 		<?php
 		//connect to mysql
@@ -111,6 +119,7 @@ Student ID: B1900083
 			$testTable = "test";
 			$conn->query($testTable);
 			$sql = "SELECT * FROM test WHERE id = $patientID";
+			$result = mysqli_query($conn, $sql);
 			
 			//fetch the data into while loop
 			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
@@ -157,7 +166,8 @@ Student ID: B1900083
 					  <td align="center">
 					  <?php 
 						// find the centreName
-						$sql = "SELECT * FROM testcentre WHERE centreID = (SELECT centreID FROM testkit where kitID = '$row['kitID']');"
+						$tempKitID = $row['kitID'];
+						$sql = "SELECT * FROM testcentre WHERE centreID = (SELECT centreID FROM testkit where kitID = '$tempKitID');";
 						$result = db_find($sql);
 						
 						// store into variable and print the centreName
@@ -169,7 +179,7 @@ Student ID: B1900083
 					  <td align="center">
 					  <?php
 						// find the centre owner (manager)
-						$sql = "SELECT * FROM user WHERE id = (SELECT id FROM testcentre WHERE centreID = $centreID);"
+						$sql = "SELECT * FROM user WHERE id = (SELECT id FROM testcentre WHERE centreID = $centreID);";
 						$result = db_find($sql);
 						
 						// store into variable and print the centre owner name
