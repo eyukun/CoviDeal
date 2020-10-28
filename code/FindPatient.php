@@ -168,7 +168,7 @@ Student ID: B1900083
 		
 		//if material table dont have data, display the message
 		if (mysqli_num_rows($resultset) == 0) { ?>
-			<h3>There are no Patient currently, please add one!</h3>
+			<h3>Record New Patient And Create A New Test!</h3>
 		<?php //if have materials
 		} else {
 		?>
@@ -190,7 +190,7 @@ Student ID: B1900083
 			   <!--table for patient details!-->
 			  <?php
 			  while($row = mysqli_fetch_array($resultset)):
-			  if($row['test_status']!='pending'){
+			  
 			  ?>
 				<tr>
 				  <td align="center"><?php echo $row['id'];?></td>
@@ -200,10 +200,15 @@ Student ID: B1900083
 				  <td align="center"><?php echo $row['patientType'];?></td>
 				  <td align="center"><?php echo $row['symptoms'];?></td>
 				  <td align="middle">
+				  <?php
+				  if($row['test_status']!='pending'){ ?>
 				  <button type="button" id="update" value="update" data-toggle="modal" 
 				  data-target="#updatePatientModal<?php echo $row['id'];?>" 
 				  class="btn btn-primary"> Update</button>
-				 
+				  <?php } 
+				  else{?>
+				  <button class="btn btn-dark" title="Cannot Update, Already Own A Test In Pending">Update</button>
+				   <?php } ?>
 				  </td>
 				</tr>				
 			  
@@ -277,7 +282,7 @@ Student ID: B1900083
 						</div>
 					</div>
 				</form>
-			  <?php } ?>
+			 
 			  <?php endwhile;?>
 			</tbody>
 		</table>
