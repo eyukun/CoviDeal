@@ -125,10 +125,9 @@ Student ID: B1900083
 			if ($conn->connect_error){
 				die("Connection failure: " . mysqli_connect_error());
 			}
-			
-			// select all pending test which kitID is match with the current centre's test kit kitID and also match with current tester
+			// select all done test which kitID is match with the current centre's test kit kitID and also match with current tester
 			// this also meaning list all the test in this centre
-			$sql = "SELECT * FROM test ";
+			$sql = "SELECT * FROM test where  (status = 'complete') AND(testDate=CURDATE()) AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
 			$result = mysqli_query($conn, $sql);
 			
 			//fetch the data into while loop
