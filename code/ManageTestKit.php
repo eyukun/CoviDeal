@@ -51,7 +51,7 @@ Student ID: B1900083
 			 <li class="nav-item pill-1">
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
-			 <li id="dropdown">
+			 <li>
 				<!-- User profile icon !-->
 			   <div class="dropdown">
 					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
@@ -64,6 +64,7 @@ Student ID: B1900083
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
 						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
+						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
 						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
 						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
 					</div>

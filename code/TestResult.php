@@ -14,7 +14,7 @@ Student ID: B1900083
 	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/UpdateTestResult.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/TestResult.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -88,9 +88,9 @@ Student ID: B1900083
 		<div class="row" id="box">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-				  <h1 class="display-4">Update Test Result</h1>
+				  <h1 class="display-4">View Test Result</h1>
 				  <hr class="my-4">
-				  <p style="font-size:20px;"> Update the test result of a patient</p><br>
+				  <p style="font-size:20px;"> The Test Result is completed and displayed in a table </p><br>
 				</div>
 			</div>
 		</div>	
@@ -100,59 +100,37 @@ Student ID: B1900083
 		<div class="form-group">
 			<div class="form-group">
 				<div class="col-lg-12">
-					<?php
-					if (isset($_SESSION['error'])) {
-						echo $_SESSION['error'];
-						unset($_SESSION['error']);} ?>
+				<?php
+				if (isset($_SESSION['error'])) {
+					echo $_SESSION['error'];
+					unset($_SESSION['error']);} ?>
 				</div>
 			</div>
 		</div>
 		<br>
-
-	<div class="col-lg-12">
-		<div id="box">
-		<!-- search bar !-->
-			 <div class="row align-items-center">
-				<div class="mx-auto">
-					 <form class="form-inline">
-						<i class="fa fa-search" aria-hidden="true" 
-						style="margin-right: 6px;"></i>
-					   <input class="form-control" id="filter" 
-					   type="number" min="1" style="width: 400px;"
-					   placeholder="Search by Test ID" onkeyup="searchTest()">
-					 </form>	
-				 </div>
-			 </div>
-		<br>
 	 
    
-   <!-- list of all tests of this tester!-->
+   <!-- list of the updated test !-->
 		<?php
 		//connect to mysql
 			$conn = new mysqli("localhost","root","", "covideal");
 			if ($conn->connect_error){
 				die("Connection failure: " . mysqli_connect_error());
 			}
-			
-			// select all pending test which kitID is match with the current centre's test kit kitID and also match with current tester
-			// this also meaning list all the test in this centre
-			$sql = "SELECT * FROM test where (testerName = '".$_SESSION['user_name']."') AND (status = 'pending') AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
-			$result = mysqli_query($conn, $sql);
+	
+			$testID = $_GET["test_id"];
+			$testTable = "test";
+			$conn->query($testTable);
+			$sql = "SELECT * FROM test WHERE testID = $testID";
 			
 			//fetch the data into while loop
 			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-			
-			//if test table dont have data, display the message
-			if (mysqli_num_rows($result) == 0) { ?>
-				<h3>There are no test currently, please record one !</h3>
-			<?php 
-			} // if have data
-			else { ?>
+			?>
 			
 			<h3>Test Table</h3>
 			<!-- list of all tests !-->
+			<form action="UpdateTestResult.php">
 			<table class="table table-borderless table-secondary" id="testTable">
-				<form class="form-control">
 				  <thead>
 					<tr class="thead-dark">
 					  <th class="text-center">Test ID</th>
@@ -163,8 +141,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Administered By</th>
-					  <th></th>
+					  <th class="text-center">Tester Name</th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -182,94 +159,14 @@ Student ID: B1900083
 					  <td align="center"><?php echo $row['kitID'];?></td>
 					  <td align="center"><?php echo $row['patientName'];?></td>
 					  <td align="center"><?php echo $row['testerName'];?></td>
-					  <td align="middle">
-					  <!-- to update a test kit !-->
-					  <button type="button" id="update" value="update" data-toggle="modal" 
-					  data-target="#updateTestModal<?php echo $row['testID'];?>" 
-					  class="btn btn-primary"> Update </button>
-					  </td>
 					</tr>				
-				  
-				  <!-- Update Test Result Modal !-->
-				<form action="common.php" method="POST">
-					<div class="modal fade" id="updateTestModal<?php echo $row['testID'];?>"
-					tabindex="-1" role="dialog">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Update Test Result</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<!-- input values !-->
-								<div class="modal-body">
-									<div class="form-group row">
-										<label for="testID" class="col-sm-6 col-lg-4 col-form-label"> Test ID </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="testID" value="<?php echo $row['testID'];?>" readonly><br>
-										</div>
-									
-										<label for="testDate" class="col-sm-6 col-lg-4 col-form-label"> Test Date </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="testDate" value="<?php echo $row['testDate'];?>" readonly><br>
-										</div>
-										
-										<label for="result" class="col-sm-6 col-lg-4 col-form-label"> Result </label> 
-										<div class="col-sm-12 col-lg-8"> 
-											<select name="result" class="form-control">
-												<option selected disabled> Choose Result </option>
-												<option value="Negative">Negative</option> 
-												<option value="Positive">Positive</option> 
-											</select><br>
-										</div> 
-										
-										<label for="resultDate" class="col-sm-6 col-lg-4 col-form-label"> Result Date </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="resultDate" value="<?php echo $row['resultDate'];?>" readonly><br>
-										</div>
-										
-										<label for="status" class="col-sm-6 col-lg-4 col-form-label"> Status </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="status" value="<?php echo $row['status'];?>" readonly><br>
-										</div>
-										
-										<label for="patientID" class="col-sm-6 col-lg-4 col-form-label"> Patient ID </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="id" value="<?php echo $row['id'];?>" readonly><br>
-										</div>
-										
-										<label for="kitID" class="col-sm-6 col-lg-4 col-form-label"> Kit ID </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="kitID" value="<?php echo $row['kitID'];?>" readonly><br>
-										</div>
-										
-										<label for="patientName" class="col-sm-6 col-lg-4 col-form-label"> Patient Name </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="patientName" value="<?php echo $row['patientName'];?>" readonly><br>
-										</div>
-									
-										<label for="testerName" class="col-sm-6 col-lg-4 col-form-label"> Tester Name </label>
-										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="testerName" value="<?php echo $row['testerName'];?>" readonly><br>
-										</div>
-									</div>
-								</div>
-								<!-- update button !-->
-								<div class="modal-footer">
-									<input name="action_name" value="updateTest" hidden>
-									<input type="submit" class="btn btn-primary" name="submit" value="Update">
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
 				<?php endwhile;?>
 				</tbody>
-			  </form>
 			</table>
-			<?php } ?>
-			
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" name="Done" value="Done">
+				</div>
+			</form>			
 				<br><br>
 				<br>
 		   </div>  
@@ -300,26 +197,7 @@ Student ID: B1900083
 	</footer>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	 <!--java script!-->
-	<script>
-		function searchTest() {
-		  var input, filter, table, tr, td, i, txtValue;
-		  input = document.getElementById("filter");
-		  filter = input.value.toUpperCase();
-		  table = document.getElementById("testTable");
-		  tr = table.getElementsByTagName("tr");
-		  for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-			  txtValue = td.textContent || td.innerText;
-			  if (txtValue.toUpperCase().indexOf(filter) > -1) {
-				tr[i].style.display = "";
-			  } else {
-				tr[i].style.display = "none";
-			  }
-			}
-		  }
-		}
-		
+	<script>		
 		function dropdown(x) {  
             x.classList.toggle("fa fa-fw fa-user-circle");  
         }  
