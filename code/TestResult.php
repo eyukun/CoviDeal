@@ -5,7 +5,6 @@ Student ID: B1900083
 <?php
 	require_once("common.php");
 ?>
-
 <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -15,17 +14,24 @@ Student ID: B1900083
 	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/ViewTestingHistory.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/TestResult.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
 	<!-- js source !-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script type="text/javascript" src="js/ManageTestKit.js"></script>
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
+	
+	</style>
   </head>
 
  <body>
@@ -55,11 +61,16 @@ Student ID: B1900083
 						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
 						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
 						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
 					</div>
 				</div>
 		</li>
 		 <li class="nav-item pill-2">
-             <a class="nav-link active" href="ViewTestingHistory.php">View Testing History</a>
+			<a class="nav-link" href="FindPatient.php">Record New Test</a>
+         </li>
+		 <li class="nav-item pill-3">
+             <a class="nav-link active" href="UpdateTestResult.php">Update Test Result</a>
          </li>
  	   </ul>
  			
@@ -89,17 +100,17 @@ Student ID: B1900083
 		<div class="form-group">
 			<div class="form-group">
 				<div class="col-lg-12">
-					<?php
-					if (isset($_SESSION['error'])) {
-						echo $_SESSION['error'];
-						unset($_SESSION['error']);} ?>
+				<?php
+				if (isset($_SESSION['error'])) {
+					echo $_SESSION['error'];
+					unset($_SESSION['error']);} ?>
 				</div>
 			</div>
 		</div>
 		<br>
 	 
    
-   <!-- list of all tests for this patient!-->
+   <!-- list of the updated test !-->
 		<?php
 		//connect to mysql
 			$conn = new mysqli("localhost","root","", "covideal");
@@ -107,22 +118,18 @@ Student ID: B1900083
 				die("Connection failure: " . mysqli_connect_error());
 			}
 	
-			$patientID = $_SESSION["id"];
+			$testID = $_GET["test_id"];
 			$testTable = "test";
 			$conn->query($testTable);
-			$sql = "SELECT * FROM test WHERE id = $patientID";
+			$sql = "SELECT * FROM test WHERE testID = $testID";
 			
 			//fetch the data into while loop
 			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
-			//if test table dont have data, display the message
-			if (mysqli_num_rows($result) == 0) { ?>
-				<h3>There are no test currently !</h3>
-			<?php 
-			} // if have data
-			else { ?>
+			?>
 			
 			<h3>Test Table</h3>
-			<!-- list of all tests of this patient!-->
+			<!-- list of all tests !-->
+			<form action="UpdateTestResult.php">
 			<table class="table table-borderless table-secondary" id="testTable">
 				  <thead>
 					<tr class="thead-dark">
@@ -134,9 +141,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Administered By</th>
-					  <th class="text-center">Centre Name</th>
-					  <th class="text-center">Centre Owner</th>
+					  <th class="text-center">Tester Name</th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -154,34 +159,14 @@ Student ID: B1900083
 					  <td align="center"><?php echo $row['kitID'];?></td>
 					  <td align="center"><?php echo $row['patientName'];?></td>
 					  <td align="center"><?php echo $row['testerName'];?></td>
-					  <td align="center">
-					  <?php 
-						// find the centreName
-						$sql = "SELECT * FROM testcentre WHERE centreID = (SELECT centreID FROM testkit where kitID = '$row['kitID']');"
-						$result = db_find($sql);
-						
-						// store into variable and print the centreName
-						$centreID = $result->centreID;
-						$centreName = $result->centreName;
-						echo $centreName;
-					  ?></td>
-		
-					  <td align="center">
-					  <?php
-						// find the centre owner (manager)
-						$sql = "SELECT * FROM user WHERE id = (SELECT id FROM testcentre WHERE centreID = $centreID);"
-						$result = db_find($sql);
-						
-						// store into variable and print the centre owner name
-						$managerName = $result->name;
-						echo $managerName;
-					  ?></td>
 					</tr>				
 				<?php endwhile;?>
 				</tbody>
 			</table>
-			<?php } ?>
-			
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" name="Done" value="Done">
+				</div>
+			</form>			
 				<br><br>
 				<br>
 		   </div>  
@@ -190,7 +175,6 @@ Student ID: B1900083
 			</div>
 		</div>
 		<br><br><br><br>
-     
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
@@ -211,13 +195,13 @@ Student ID: B1900083
         </div>
       </div>
 	</footer>
-	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	 <!--java script!-->
 	<script>		
 		function dropdown(x) {  
             x.classList.toggle("fa fa-fw fa-user-circle");  
         }  
 	</script>
-	
 </body>
 </html>
 <!--
