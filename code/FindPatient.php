@@ -206,8 +206,11 @@ Student ID: B1900083
 				  <button type="button" id="update" value="update" data-toggle="modal" 
 				  data-target="#updatePatientModal<?php echo $row['id'];?>" 
 				  class="btn btn-primary"> Update</button>
-				  <?php }?>
-				  
+				  <?php }
+				  else{?>
+				  <button class="btn btn-dark" title="Cannot Record New Test , Already Own A Test">Update</button>
+				  <?php
+				  }?>
 				  </td>
 				</tr>				
 			  

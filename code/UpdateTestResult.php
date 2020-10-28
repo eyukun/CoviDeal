@@ -100,10 +100,6 @@ Student ID: B1900083
 		<div class="form-group">
 			<div class="form-group">
 				<div class="col-lg-12">
-					<?php
-					if (isset($_SESSION['error'])) {
-						echo $_SESSION['error'];
-						unset($_SESSION['error']);} ?>
 				</div>
 			</div>
 		</div>
@@ -126,7 +122,7 @@ Student ID: B1900083
 		<br>
 	 
    
-   <!-- list of all tests of this tester!-->
+   <!-- list of all tests !-->
 		<?php
 		//connect to mysql
 			$conn = new mysqli("localhost","root","", "covideal");
