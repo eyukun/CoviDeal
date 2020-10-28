@@ -100,6 +100,10 @@ Student ID: B1900083
 		<div class="form-group">
 			<div class="form-group">
 				<div class="col-lg-12">
+					<?php
+					if (isset($_SESSION['error'])) {
+						echo $_SESSION['error'];
+						unset($_SESSION['error']);} ?>
 				</div>
 			</div>
 		</div>
@@ -122,7 +126,7 @@ Student ID: B1900083
 		<br>
 	 
    
-   <!-- list of all tests !-->
+   <!-- list of all tests of this tester!-->
 		<?php
 		//connect to mysql
 			$conn = new mysqli("localhost","root","", "covideal");
@@ -159,7 +163,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Tester Name</th>
+					  <th class="text-center">Administered By</th>
 					  <th></th>
 					</tr>
 				  </thead>
@@ -214,6 +218,7 @@ Student ID: B1900083
 										<label for="result" class="col-sm-6 col-lg-4 col-form-label"> Result </label> 
 										<div class="col-sm-12 col-lg-8"> 
 											<select name="result" class="form-control">
+												<option selected disabled> Choose Result </option>
 												<option value="Negative">Negative</option> 
 												<option value="Positive">Positive</option> 
 											</select><br>
