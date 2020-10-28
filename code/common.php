@@ -347,6 +347,7 @@ function registerTestKit(){
 function updatePatient()
 {
 	$username=$_POST['username'];
+	$name=$_POST['name'];
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
@@ -370,7 +371,7 @@ function updatePatient()
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
-								." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
+								." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
 		
 		
 		//send testid to next page
@@ -442,6 +443,7 @@ function recordPatient(){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$name = $_POST['name'];
+	$nation=$_POST['nation'];
 	$patientType = $_POST['patientType'];
 	$symptoms = $_POST['symptoms'];
 	$centreID = $_SESSION["centreID"];
@@ -461,7 +463,7 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,position,patientType,symptoms) values ('$username', '$password', '$name','patient','$patientType','$symptoms');";
+		$insert = "insert into user(username, password, name,nation,position,patientType,symptoms) values ('$username', '$password', '$name','$nation','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
 		
 		// if patient created success
@@ -478,7 +480,7 @@ function recordPatient(){
 			}
 			else {
 				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
-										." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
+										." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
 				
 				//send testid to next page
 				$new_test_id = db_insert($create_test_id_sql);
