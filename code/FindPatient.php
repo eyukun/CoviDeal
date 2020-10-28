@@ -145,7 +145,7 @@ Student ID: B1900083
 		//use table
 		$userTable = "use user";
 		$conn->query($userTable);
-	    $sql = "select user.*, test.testID as test_id from user left join test on (user.id = test.id) where user .position = 'patient'";
+	    $sql = "select user.*, test.status as test_status from user left join test on (user.id = test.id) where user .position = 'patient'";
 		
 		//testkit table
 		$check = new mysqli("localhost","root","", "covideal");
@@ -190,7 +190,7 @@ Student ID: B1900083
 			   <!--table for patient details!-->
 			  <?php
 			  while($row = mysqli_fetch_array($resultset)):
-			  
+			  if($row['test_status']!='pending'){
 			  ?>
 				<tr>
 				  <td align="center"><?php echo $row['id'];?></td>
@@ -200,17 +200,10 @@ Student ID: B1900083
 				  <td align="center"><?php echo $row['patientType'];?></td>
 				  <td align="center"><?php echo $row['symptoms'];?></td>
 				  <td align="middle">
-				  <?php
-				  if($row['test_id']==null)
-				  {?>
 				  <button type="button" id="update" value="update" data-toggle="modal" 
 				  data-target="#updatePatientModal<?php echo $row['id'];?>" 
 				  class="btn btn-primary"> Update</button>
-				  <?php }
-				  else{?>
-				  <button class="btn btn-dark" title="Cannot Record New Test , Already Own A Test">Update</button>
-				  <?php
-				  }?>
+				 
 				  </td>
 				</tr>				
 			  
@@ -284,6 +277,7 @@ Student ID: B1900083
 						</div>
 					</div>
 				</form>
+			  <?php } ?>
 			  <?php endwhile;?>
 			</tbody>
 		</table>
