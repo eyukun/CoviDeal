@@ -351,7 +351,7 @@ function registerTestKit(){
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
-	
+	$username=$_POST['username'];
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
@@ -374,8 +374,8 @@ function updatePatient()
 		//create new test
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
-		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-								." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
+								." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
 		
 		
 		//send testid to next page
@@ -407,7 +407,7 @@ function record_tester()
 	$name = $_POST['name'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username' AND centreID='$centreID'";
+	$sql = "SELECT * FROM user WHERE username='$username'";
 	$user = db_find($sql);
 
 
@@ -447,11 +447,11 @@ function recordPatient(){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$name = $_POST['name'];
-	$nation=$_POST['nation'];
 	$patientType = $_POST['patientType'];
 	$symptoms = $_POST['symptoms'];
+	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username' ";
+	$sql = "SELECT * FROM user WHERE username='$username'";
 	$user = db_find($sql);
 
 
@@ -466,7 +466,7 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,nation,position,patientType,symptoms) values ('$username', '$password', '$name','$nation','patient','$patientType','$symptoms');";
+		$insert = "insert into user(username, password, name,position,patientType,symptoms) values ('$username', '$password', '$name','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
 		
 		// if patient created success
@@ -482,8 +482,8 @@ function recordPatient(){
 				echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 			}
 			else {
-				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-										." values (now(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
+										." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
 				
 				//send testid to next page
 				$new_test_id = db_insert($create_test_id_sql);

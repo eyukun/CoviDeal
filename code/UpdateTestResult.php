@@ -163,7 +163,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Administered By</th>
+					  <th class="text-center">Tester Name</th>
 					  <th></th>
 					</tr>
 				  </thead>
@@ -218,7 +218,6 @@ Student ID: B1900083
 										<label for="result" class="col-sm-6 col-lg-4 col-form-label"> Result </label> 
 										<div class="col-sm-12 col-lg-8"> 
 											<select name="result" class="form-control">
-												<option selected disabled> Choose Result </option>
 												<option value="Negative">Negative</option> 
 												<option value="Positive">Positive</option> 
 											</select><br>
