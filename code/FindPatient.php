@@ -180,6 +180,7 @@ Student ID: B1900083
 				  <th class="text-center">UserID</th>
 				  <th class="text-center">Username</th>
 				  <th class="text-center">Name</th>
+				  <th class="text-center">Nation</th>
 				  <th class="text-center">PatientType</th>
 				  <th class="text-center">Symptoms</th>
 				  <th></th>
@@ -195,6 +196,7 @@ Student ID: B1900083
 				  <td align="center"><?php echo $row['id'];?></td>
 				  <td align="center"><?php echo $row['username'];?></td>
 				  <td align="center"><?php echo $row['name'];?></td>
+				  <td align="center"><?php echo $row['nation'];?></td>
 				  <td align="center"><?php echo $row['patientType'];?></td>
 				  <td align="center"><?php echo $row['symptoms'];?></td>
 				  <td align="middle">
@@ -231,6 +233,10 @@ Student ID: B1900083
 										<label for="username" class="col-sm-6 col-lg-4 col-form-label"> Username </label>
 										<div class="col-sm-12 col-lg-8">
 											<input type="text" class="form-control" name="username" value="<?php echo $row['username'];?>" readonly><br>
+										</div>
+										<label for="name" class="col-sm-6 col-lg-4 col-form-label"> name </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" class="form-control" name="name" value="<?php echo $row['name'];?>" readonly><br>
 										</div>
 										
 										<label for="patientType" class="col-sm-6 col-lg-4 col-form-label"> PatientType </label>
@@ -325,7 +331,14 @@ Student ID: B1900083
 									placeholder="Full Name" required>
 									<div class="invalid-feedback">Name Should Only Contain Letters.</div><br>
 								</div>
-								
+								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Nation</label>
+								<div class="col-sm-12 col-lg-8">
+								<select name="nation" id="nation" class="form-control">
+									<option value="International">International</option>
+									<option value="Local">Local</option>
+								</select>
+								<br>
+								</div>
 								<label for="type"class="col-sm-6 col-lg-4 col-form-label">Patient Type</label>
 								<div class="col-sm-12 col-lg-8">
 								<select name="patientType" id="patientType" class="form-control">
