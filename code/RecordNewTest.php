@@ -11,8 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="css/RecordNewTest.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/recordNewTest.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -124,7 +123,8 @@ Student ID: B1802197
 				  <th class="text-center">Status</th>
 				  <th class="text-center">PatientID</th>
 				  <th class="text-center">Kit ID</th>
-				  <th></th>
+				  <th class="text-center">Patient Name</th>
+				  <th class="text-center">Tester Name</th>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -140,6 +140,8 @@ Student ID: B1802197
 				  <td align="center"><?php echo $row['status'];?></td>
 				  <td align="center"><?php echo $row['id'];?></td>
 				  <td align="center"><?php echo $row['kitID'];?></td>
+				  <td align="center"><?php echo $row['patientName'];?></td>
+				  <td align="center"><?php echo $row['testerName'];?></td>
 				  <td align="middle"></td>
 				</tr>				
 			  <?php endwhile?>

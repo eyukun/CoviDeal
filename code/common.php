@@ -79,6 +79,14 @@ function login() {
 		$_SESSION['position'] = $user->position;
 		$_SESSION['patient_type'] = $user->patientType;
 		$_SESSION['centreID'] = $user->centreID;
+		
+		// if is a patient, centreID will be null
+		// if the manager hasn't register a centre yet, centreID will be null too
+		if ($_SESSION['centreID'] != null){
+			$sql1 = "SELECT * FROM testcentre where centreID = '". $_SESSION['centreID']."'";
+			$centre = db_find($sql1);
+			$_SESSION['centreName'] = $centre->centreName;
+		}
 
 		// determine position
 		switch ($_SESSION['position']) {
@@ -231,13 +239,14 @@ function registerTestCentre(){
 					<strong>New test centre ('.$centreName.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					$_SESSION['centreID'] = $centreID;
+					$_SESSION["centreName"] = $centreName;
 					echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
 				}
 			}
 			else {
 				$error = '<div class="alert alert-danger alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong> Test Centre added unsuccessfully!</strong></div>';
+				<strong> Test Centre ('.$centreName.') added unsuccessfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/registerTestCentre.php'; </script>";
 			}
@@ -250,6 +259,7 @@ function updateTestKit(){
 	
 	// get kitID from update form
 	$kitID = $_POST['kitID'];
+	$testName = $_POST['testName'];
 	$sql = "SELECT * FROM testkit WHERE kitID='$kitID' AND centreID='".$_SESSION['centreID']."'" ;
 	$testkit = db_find($sql);
 	
@@ -258,7 +268,7 @@ function updateTestKit(){
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Error occurs! ' . $kitID . ' (Test Kit) is not found.</strong></div>';
+		<strong>Error occurs! ' . $testName . ' (Test Kit) is not found.</strong></div>';
 		$_SESSION['error'] = $error;
 		echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 	}
@@ -275,7 +285,7 @@ function updateTestKit(){
 		if ($testkit != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Test Kit ('.$kitID.') Stock has been updated successfully!</strong></div>';
+			<strong>Test Kit ('.$testName.') Stock has been updated successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
 		}
@@ -283,7 +293,7 @@ function updateTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit ('.$kitID.') updated unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testName.') updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 		}
@@ -336,7 +346,7 @@ function registerTestKit(){
 //to update patient data by using existing data and record new test
 function updatePatient()
 {
-	
+	$username=$_POST['username'];
 	$id = $_POST['id'];
 	$sql = "SELECT * FROM user WHERE id='$id'" ;
 	$user = db_find($sql);
@@ -359,8 +369,8 @@ function updatePatient()
 		//create new test
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
-		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-								." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
+								." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
 		
 		
 		//send testid to next page
@@ -392,7 +402,7 @@ function record_tester()
 	$name = $_POST['name'];
 	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username' AND centreID='$centreID'";
+	$sql = "SELECT * FROM user WHERE username='$username'";
 	$user = db_find($sql);
 
 
@@ -432,11 +442,11 @@ function recordPatient(){
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$name = $_POST['name'];
-	$nation=$_POST['nation'];
 	$patientType = $_POST['patientType'];
 	$symptoms = $_POST['symptoms'];
+	$centreID = $_SESSION["centreID"];
 	
-	$sql = "SELECT * FROM user WHERE username='$username' ";
+	$sql = "SELECT * FROM user WHERE username='$username'";
 	$user = db_find($sql);
 
 
@@ -451,7 +461,7 @@ function recordPatient(){
 	}
 	else{
 		//add the patient
-		$insert = "insert into user(username, password, name,nation,position,patientType,symptoms) values ('$username', '$password', '$name','$nation','patient','$patientType','$symptoms');";
+		$insert = "insert into user(username, password, name,position,patientType,symptoms) values ('$username', '$password', '$name','patient','$patientType','$symptoms');";
 		$id = db_insert($insert);
 		
 		// if patient created success
@@ -467,8 +477,8 @@ function recordPatient(){
 				echo "<script type='text/javascript'> window.location = '/code/FindPatient.php'; </script>";
 			}
 			else {
-				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`) "
-										." values (current_timestamp(), 'pending', 'pending', 'pending', '$id', $kitID) ";
+				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
+										." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$username. "','" .$_SESSION['username']. "') ";
 				
 				//send testid to next page
 				$new_test_id = db_insert($create_test_id_sql);

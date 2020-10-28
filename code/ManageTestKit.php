@@ -1,6 +1,6 @@
 <!--
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->
 <?php
 	require_once("common.php");
@@ -14,7 +14,7 @@ Student ID: B1802197
 	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/RecordTester.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/ManageTestKit.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -82,14 +82,14 @@ Student ID: B1802197
 				 <a
 				 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
 				 href="#" title="Please register a test centre first !" <?php }
-				 else { ?> class="nav-link active" href="RecordTester.php" <?php } ?>
+				 else { ?> class="nav-link" href="RecordTester.php" <?php } ?>
 				 >Record Tester</a>
 			 </li>
 			 <li class="nav-item pill-4">
 				 <a
 				 <?php if(isset($_SESSION['centreID']) == null){ ?> class="nav-link text-secondary"
 				 href="#" title="Please register a test centre first !" <?php } 
-				 else { ?> class="nav-link" href="ManageTestKit.php" <?php } ?>
+				 else { ?> class="nav-link active" href="ManageTestKit.php" <?php } ?>
 				 >Manage Test Kit Stock</a>
 			 </li>
 		   </ul>
@@ -101,16 +101,28 @@ Student ID: B1802197
 		  
 		</div>
    </nav>
-   <br><br>
+   <br>
+   <br>
 		   <!-- container !-->
 		   <!-- website details !-->
 		<div class = "container">
 			<div class="row" id = "box">
 				<div class="col-lg-12">
 					<div class="jumbotron">
-					  <h1 class="display-4">Record Tester</h1>
+					  <h1 class="display-4">Manage Test Kit Stock</h1>
 					  <hr class="my-4">
-					  <!-- error message here !-->
+					  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
+						<p class="lead">
+						  <!-- register button to register a new test kit !-->
+						  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
+						  data-target="#registerTestKitModal"> Register </button>
+						</p>
+					 </div>
+				</div>
+			</div>	
+		 <hr>
+		 
+		 <!-- error message here !-->
 		<div class="form-group">
 			<div class="col-lg-12">
 				<?php
@@ -119,16 +131,7 @@ Student ID: B1802197
 					unset($_SESSION['error']);} ?>
 			</div>
 		</div>
-					  <p style="font-size:20px;"> To Record A New Tester</p><br>
-						<p class="lead">
-						  <!-- register button to register a new test kit !-->
-						  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
-						  data-target="#recordTester"> Register </button>
-						</p>
-					 </div>
-				</div>
-			</div>	
-		 
+		<br>
 		
 	<div class="col-lg-12">
         <div id="box">
@@ -140,12 +143,12 @@ Student ID: B1802197
 						style="margin-right: 6px;"></i>
 				   <input class="form-control" style="width: 400px;"
 				   id="filter" type="text"
-				   placeholder="Search by Tester ID" onkeyup="searchTester()">
+				   placeholder="Search by Test Name" onkeyup="searchTestKit()">
 				 </form>	
 			 </div>
 			</div>
 		<br>
-		<!-- display the list of tester !-->
+		<!-- display the list of test kit !-->
 		<?php
 		//connect to mysql
 			$conn = new mysqli("localhost","root","", "covideal");
@@ -154,29 +157,30 @@ Student ID: B1802197
 			}
 			
 			//use table
-			$userTable = "use user";
-			$conn->query($userTable);
-			$sql = "SELECT * FROM user WHERE position='tester'";
+			$testKitTable = "use testkit";
+			$conn->query($testKitTable);
+			$sql = "SELECT * FROM testkit WHERE centreID='".$_SESSION['centreID']."'";
 			$result = mysqli_query($conn, $sql);
 			
 			//fetch the data into while loop
 			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
 			//if test kit table dont have data, display the message
 			if (mysqli_num_rows($result) == 0) { ?>
-				<h3>There are no tester currently, please add one!</h3>
-			<?php //if have tester
+				<h3>There are no test kits currently, please add one!</h3>
+			<?php //if have test kits
 			} else {
 			?>
-			<h3>Tester Table</h3>
-			<!-- list of all Tester !-->
-			<table class="table table-borderless table-secondary" id="userTable">
+			<h3>Test Kit Table</h3>
+			<!-- list of all test kit !-->
+			<table class="table table-borderless table-secondary" id="testkitTable">
 				<form class="form-control">
 				  <thead>
 					<tr class="thead-dark">
-					  <th class="text-center">User ID</th>
-					  <th class="text-center">Username</th>
-					  <th class="text-center">Name</th>
+					  <th class="text-center">KitID</th>
+					  <th class="text-center">Test_Name</th>
+					  <th class="text-center">Available_Stock</th>
 					  <th class="text-center">CentreID</th>
+					  <th></th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -185,16 +189,62 @@ Student ID: B1802197
 				  while($row = mysqli_fetch_array($resultset)):
 				  ?>
 					<tr>
-					  <td align="center"><?php echo $row['id'];?></td>
-					  <td align="center"><?php echo $row['username'];?></td>
-					  <td align="center"><?php echo $row['name'];?></td>
+					  <td align="center"><?php echo $row['kitID'];?></td>
+					  <td align="center"><?php echo $row['testName'];?></td>
+					  <td align="center"><?php echo $row['availableStock'];?></td>
 					  <td align="center"><?php echo $row['centreID'];?></td>
+					  <td align="middle">
+					  <!-- to update a test kit !-->
+					  <button type="button" id="update" value="update" data-toggle="modal" 
+					  data-target="#updateTestKitModal<?php echo $row['kitID'];?>" 
+					  class="btn btn-primary"> Update </button>
+					  </td>
 					</tr>				
 				  
-				 
+				  <!-- Update Test Kit Stock Modal !-->
+				<form action="common.php" method="POST">
+					<div class="modal fade" id="updateTestKitModal<?php echo $row['kitID'];?>"
+					tabindex="-1" role="dialog">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Update Test Kit Stock</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!-- input values !-->
+								<div class="modal-body">
+									<div class="form-group row">
+										<label for="kitID" class="col-sm-6 col-lg-4 col-form-label"> Kit ID </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" class="form-control" name="kitID" value="<?php echo $row['kitID'];?>" readonly><br>
+										</div>
+									
+										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" class="form-control" name="testName" value="<?php echo $row['testName'];?>" readonly><br>
+										</div>
+									
+										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="number" min="1" pattern="^[1-9][0-9]*$"
+											class="form-control" name="stock" required>
+										</div>
+									</div>
+								</div>
+								<!-- update button !-->
+								<div class="modal-footer">
+									<input name="action_name" value="updateTestKit" hidden>
+									<input type="submit" class="btn btn-primary" name="submit" value="Update">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<?php endwhile;?>
 				</tbody>
 			  </form>
-			  <?php endwhile;?>
 			</table>
 			<?php } ?>
 				<br><br>
@@ -208,49 +258,37 @@ Student ID: B1802197
 		
 		<!-- Register Test Kit Modal !-->
 				<form action="common.php" method="POST" class="needs-validation" novalidate>
-					<div class="modal fade" id="recordTester" tabindex="-1" role="dialog">
+					<div class="modal fade" id="registerTestKitModal" tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Record Tester</h5>
+									<h5 class="modal-title" id="exampleModalLongTitle">Register Test Kit</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<!-- input values !-->
 								<div class="modal-body">
-										<div class="form-group row">
-								<!-- <div id="error"> -->
-								<label for="username"class="col-sm-6 col-lg-4 col-form-label"> Username</label>
-								<div class="col-sm-12 col-lg-8">
-									<input type="text" class="form-control" name="username"  pattern="[a-zA-Z ]+" maxlength = "20"
-									placeholder="Username" title="Please enter a username contains only letters." required>
-									<div class="invalid-feedback">Please enter the Username.</div><br>
-								</div>
-
-								<label for="password" class="col-sm-6 col-lg-4 col-form-label"> Password</label>
-								<div class="col-sm-12 col-lg-8">
-									<input type="password" class="form-control" name="password" pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
-									minlength="8"
-									maxlength = "20"
-									placeholder="Password" title="Please enter a password contains at least one number and one letter, and at least 8 or more characters." required>
-									<div class="invalid-feedback">Please enter the Password.</div><br>
-								</div>
-
-
-								<label for="name"class="col-sm-6 col-lg-4 col-form-label"> Name</label>
-								<div class="col-sm-12 col-lg-8">
-									<input type="text" class="form-control" name="name"  pattern="[a-zA-Z ]+"
-									maxlength = "50"
-									placeholder="Full Name" title="Please enter a name contains only letters." required>
-									<div class="invalid-feedback">Please enter the Name.</div><br>
-								</div>
-							</div>
+									<div class="form-group row">
+										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="text" pattern="^.*[a-zA-Z]+.*"
+											class="form-control" name="testName" required>
+											<div class="invalid-feedback">Please enter a test name contains at least one letter.</div><br>
+										</div>
+							
+										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
+										<div class="col-sm-12 col-lg-8">
+											<input type="number" min="1" pattern="^[1-9][0-9]*$"
+											class="form-control" name="stock" required>
+											<div class="invalid-feedback">Please enter a valid number.</div><br>
+										</div>
+									</div>
 								</div>
 								<!-- register button !-->
 								<div class="modal-footer">
-									<input name="action_name" value="record_tester" hidden>
-									<input type="submit" class="btn btn-primary" name="submit" value="Add">
+									<input name="action_name" value="registerTestKit" hidden>
+									<input type="submit" class="btn btn-primary" name="submit" value="Register">
 								</div>
 							</div>
 						</div>
@@ -279,23 +317,23 @@ Student ID: B1802197
 	</footer>
 	<!-- javascript for search bar !-->
 	<script>
-		function searchTester() {
-		  var input, filter, table, tr, td, i, txtValue;
-		  input = document.getElementById("filter");
-		  filter = input.value.toUpperCase();
-		  table = document.getElementById("userTable");
-		  tr = table.getElementsByTagName("tr");
-		  for (i = 0; i < tr.length; i++) {
-			td = tr[i].getElementsByTagName("td")[0];
-			if (td) {
-			  txtValue = td.textContent || td.innerText;
-			  if (txtValue.toUpperCase().indexOf(filter) > -1) {
-				tr[i].style.display = "";
-			  } else {
-				tr[i].style.display = "none";
-			  }
+		function searchTestKit() {			
+			var input, filter, tr, table, td, i, txtValue;
+			input = document.getElementById("filter");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("testkitTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td){
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
 			}
-		  }
 		}
 		
 		function dropdown(x) {  
@@ -305,6 +343,6 @@ Student ID: B1802197
 </body>
 </html>
 <!--
-Student Name: Ng Jun ZHi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->

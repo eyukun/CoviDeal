@@ -1,11 +1,10 @@
 <!--
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->
 <?php
 	require_once("common.php");
 ?>
-
 <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -15,17 +14,25 @@ Student ID: B1802197
 	<!-- css source !-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/RegisterTestCentre.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/generateTestReport.css" type="text/css" media="screen">
+		 <link rel="stylesheet" href="css/generateTestReport.css" type="text/css" media="print">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
 	<!-- js source !-->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script type="text/javascript" src="js/ManageTestKit.js"></script>
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
+	
+	</style>
   </head>
 
  <body>
@@ -38,11 +45,28 @@ Student ID: B1802197
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
        <ul class="nav nav-pills" role="tablist">
-			 <li class="nav-item pill-1">
-				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
-			 </li>
-		 <li class="nav-item pill-2">
-             <a class="nav-link active text-light" href="GenerateTestReport.php">Generate Test Report</a>
+		 <li class="nav-item pill-1">
+			<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
+		 </li>
+		 <li>
+				<!-- User profile icon !-->
+			   <div class="dropdown">
+					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
+					   <a class="navbar-brand" href="javascript:void(0);">
+					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)" ></i>
+					   Hi, <?php echo $_SESSION["username"]; ?>
+					   </a>
+				   </button>
+				   <!-- Dropdown options !-->
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
+						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
+						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+					</div>
+				</div>
+		</li>
+		 <li class="nav-item pill-3">
+             <a class="nav-link active" href="GenerateTestReport.php">Generate Test Report</a>
          </li>
  	   </ul>
  			
@@ -53,12 +77,119 @@ Student ID: B1802197
  	</div>
    </nav>
    <!-- container !-->
+   <br>
+   <br>
+  
+   <div class = "container">
+		<div class="row" id="box">
+			<div class="col-lg-12">
+				<div class="jumbotron">
+				<br><br><br><br><br>
+				  <h1 class="display-4">Generate Test Report</h1>
+				<br><br><br><br><br>
+				</div>
+			</div>
+		</div>	
+	<hr>
+	
+		 <!--error message!-->
+		<div class="form-group">
+			<div class="form-group">
+				<div class="col-lg-12">
+				</div>
+			</div>
+		</div>
+		<br>
+
+	<div class="col-lg-12">
+		<div id="box">
+		<!-- search bar !-->
+			 <div class="row align-items-center">
+				<div class="mx-auto">
+					 <form class="form-inline">
+						<i class="fa fa-search" aria-hidden="true" 
+						style="margin-right: 6px;"></i>
+					   <input class="form-control" id="filter" 
+					   type="number" min="1" style="width: 400px;"
+					   placeholder="Search by Test ID" onkeyup="searchTest()">
+					 </form>	
+				 </div>
+			 </div>
+		<br>
+	 
    
-   
-   
-   
-   
-   
+   <!-- list of all tests !-->
+		<?php
+		//connect to mysql
+			$conn = new mysqli("localhost","root","", "covideal");
+			if ($conn->connect_error){
+				die("Connection failure: " . mysqli_connect_error());
+			}
+			
+			// select all pending test which kitID is match with the current centre's test kit kitID and also match with current tester
+			// this also meaning list all the test in this centre
+			$sql = "SELECT * FROM test ";
+			$result = mysqli_query($conn, $sql);
+			
+			//fetch the data into while loop
+			$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
+			
+			//if test table dont have data, display the message
+			if (mysqli_num_rows($result) == 0) { ?>
+				<h3>There are no test currently, please record one !</h3>
+			<?php 
+			} // if have data
+			else { ?>
+			
+			<h3>Test Table</h3>
+			<!-- list of all tests !-->
+			<table class="table table-borderless table-secondary" id="testTable">
+				<form class="form-control">
+				  <thead>
+					<tr class="thead-dark">
+					  <th class="text-center">Test ID</th>
+					  <th class="text-center">Test Date</th>
+					  <th class="text-center">Result</th>
+					  <th class="text-center">Result Date</th>
+					  <th class="text-center">status</th>
+					  <th class="text-center">Patient ID</th>
+					  <th class="text-center">Kit ID</th>
+					  <th class="text-center">Patient Name</th>
+					  <th class="text-center">Tester Name</th>
+					  <th></th>
+					</tr>
+				  </thead>
+				  <tbody>
+				  <?php
+				  // get each row of test kit into table
+				  while($row = mysqli_fetch_array($resultset)):
+				  ?>
+					<tr>
+					  <td align="center"><?php echo $row['testID'];?></td>
+					  <td align="center"><?php echo $row['testDate'];?></td>
+					  <td align="center"><?php echo $row['result'];?></td>
+					  <td align="center"><?php echo $row['resultDate'];?></td>
+					  <td align="center"><?php echo $row['status'];?></td>
+					  <td align="center"><?php echo $row['id'];?></td>
+					  <td align="center"><?php echo $row['kitID'];?></td>
+					  <td align="center"><?php echo $row['patientName'];?></td>
+					  <td align="center"><?php echo $row['testerName'];?></td>
+					</tr>				
+				  
+				<?php endwhile;?>
+				</tbody>
+			  </form>
+			</table>
+			<?php } ?>
+			<button class="btn btn-success" onclick="window.print()">Print Test Report</button>
+				<br><br>
+				<br>
+		   </div>  
+			
+			
+			</div>
+		</div>
+		<br><br><br><br>
    <!-- footer !-->
     <footer class="site-footer">
       <div class="container">
@@ -79,10 +210,35 @@ Student ID: B1802197
         </div>
       </div>
 	</footer>
-	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	 <!--java script!-->
+	<script>
+		function searchTest() {
+		  var input, filter, table, tr, td, i, txtValue;
+		  input = document.getElementById("filter");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("testTable");
+		  tr = table.getElementsByTagName("tr");
+		  for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+			  txtValue = td.textContent || td.innerText;
+			  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			  } else {
+				tr[i].style.display = "none";
+			  }
+			}
+		  }
+		}
+		
+		function dropdown(x) {  
+            x.classList.toggle("fa fa-fw fa-user-circle");  
+        }  
+	</script>
 </body>
 </html>
 <!--
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 !-->

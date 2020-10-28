@@ -1,32 +1,22 @@
 /**
-Student Name: Ng Jun ZHi
+Student Name: Ng Jun Zhi
 Student ID: B1802197
 **/
 
 /** Body **/
-#box, #search{
-	border: 1px solid black;
-	box-shadow: 0px 2px 0px 2px;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
-
-#btn1 {
-  padding: 1rem 3rem;
-  border-radius: 100px;
-  font-size:17px;
-}
-
 .table {
-	width: 60%;
-	height: 30%;
+	width: 80%;
+	overflow-y: scroll;
+	height: 300px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
+
+td, th{
+	width: 300px;
+}
+
 
 .form-group {
 	margin-top: 18px;}
@@ -60,6 +50,7 @@ Student ID: B1802197
 .nav-pills .pill-5 .nav-link:not(.active) {
 	color: rgb(255, 255, 255);
 }
+
 
 /** Navigation **/
 
@@ -138,25 +129,10 @@ Student ID: B1802197
 {
   margin:0
 }
-@media (max-width:1200px)
-{
-	.table {
-		width: 55%;
-	}
-}
 
-@media (max-width:1100px)
-{
-	.table {
-		width: 55%;
-	}
-}
 
 @media (max-width:991px)
 {
-	.table {
-		width: 75%;
-	}
 	
   .site-footer [class^=col-]
   {
@@ -165,9 +141,6 @@ Student ID: B1802197
 }
 @media (max-width:767px)
 {
-	.table {
-		width: 100%;
-	}
 	
   .site-footer
   {
@@ -241,6 +214,7 @@ Student ID: B1802197
     margin-right:0;
     font-weight:600
   }
+  
 }
 /**
 Student Name: Ng Jun Zhi
