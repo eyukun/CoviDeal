@@ -70,7 +70,7 @@ require_once("common.php");
 		  <br>
 			  <div style="text-align:center">
 				<a class="login" data-toggle="modal" data-target="#loginModal">
-				  <span style="color: blue;" role="button">LogIn</span>
+				  <span role="button">LogIn</span>
 				</a>
 			  </div>	
 	
