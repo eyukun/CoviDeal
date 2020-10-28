@@ -189,7 +189,7 @@ Student ID: B1900083
 					  class="btn btn-primary"> Update </button>
 					  </td>
 					</tr>				
-				  
+				</form>
 				  <!-- Update Test Result Modal !-->
 				<form action="common.php" method="POST">
 					<div class="modal fade" id="updateTestModal<?php echo $row['testID'];?>"
@@ -219,8 +219,8 @@ Student ID: B1900083
 										<div class="col-sm-12 col-lg-8"> 
 											<select name="result" class="form-control">
 												<option selected disabled> Choose Result </option>
-												<option value="Negative">Negative</option> 
-												<option value="Positive">Positive</option> 
+												<option value="negative">Negative</option> 
+												<option value="positive">Positive</option> 
 											</select><br>
 										</div> 
 										
@@ -266,7 +266,6 @@ Student ID: B1900083
 				</form>
 				<?php endwhile;?>
 				</tbody>
-			  </form>
 			</table>
 			<?php } ?>
 			

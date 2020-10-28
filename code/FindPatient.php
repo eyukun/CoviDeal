@@ -213,7 +213,7 @@ Student ID: B1900083
 				</tr>				
 			  
 				<!-- Update Test Kit Stock Modal !-->
-				<form action="common.php" method="POST" class="needs-validation" novalidate>
+				<form action="common.php" method="POST">
 					<div class="modal fade" id="updatePatientModal<?php echo $row['id'];?>"
 					tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
@@ -242,7 +242,7 @@ Student ID: B1900083
 										
 										<label for="patientType" class="col-sm-6 col-lg-4 col-form-label"> PatientType </label>
 										<div class="col-sm-12 col-lg-8">
-										<select name="patientType" id="patientType" class="form-control" >
+										<select name="patientType" class="form-control" >
 												<option value="Returnee">Returnee</option>
 												<option value="Quarantined">Quarantined</option>
 												<option value="Close Contact">CloseContact</option>
@@ -253,9 +253,8 @@ Student ID: B1900083
 										<label for="symptoms" class="col-sm-6 col-lg-4 col-form-label">Symptoms</label>
 										<div class="col-sm-12 col-lg-8">
 											<input type="text" class="form-control" name="symptoms"
-											maxlength = "50" pattern="[a-zA-Z ]+"
-											placeholder="Symptoms of the Patient" required>
-											<div class="invalid-feedback">Please enter the Symptoms.</div><br>
+											maxlength = "50" pattern="^.*[a-zA-Z]+.*" title="Please enter the symptoms contains at least one letters !"
+											placeholder="Symptoms of the Patient" required><br>
 										</div>
 										
 										<label for="kitID"class="col-sm-6 col-lg-4 col-form-label">KITID</label>

@@ -25,7 +25,6 @@ if(isset($_POST['action_name'])) {
 	
 	// determine which form
 	switch ($_POST['action_name']) {
-		
 		// login function
 		case 'login':
 			login();
