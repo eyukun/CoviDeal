@@ -109,7 +109,8 @@ Student ID: B1900083
 		</div>
 		<br>
 	 
-   
+   	<div class="col-lg-12">
+		<div id="box">
    <!-- list of the updated test !-->
 		<?php
 		//connect to mysql
@@ -174,6 +175,8 @@ Student ID: B1900083
 			
 			</div>
 		</div>
+	  </div>
+	</div>
 		<br><br><br><br>
    <!-- footer !-->
     <footer class="site-footer">
