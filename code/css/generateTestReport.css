@@ -1,8 +1,13 @@
-
 /**
 Student Name: Ng Jun Zhi
-Student ID: B1802197**/
+Student ID: B1802197
+**/
 /** Body **/
+.jumbotron {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../images/report.jpeg');
+	background-size: cover;
+	color: white;
+}
 
 h3 {
 	font-family: Impact, Charcoal, sans-serif;
@@ -20,7 +25,8 @@ h3 {
 }
 
 .table {
-	width: 100%;
+	width: 102%;
+	overflow-y: scroll;
 	height: 30%;
 	display: block;
 	margin-left: auto;
@@ -230,3 +236,7 @@ td, th{
   }
   
 }
+/**
+Student Name: Ng Jun Zhi
+Student ID: B1802197
+**/

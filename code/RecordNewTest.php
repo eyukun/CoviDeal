@@ -11,7 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/recordNewTest.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/RecordNewTest.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -54,6 +54,23 @@ Student ID: B1802197
 			 <li class="nav-item pill-1">
 				<a class="navbar-brand" style="font-family:cursive; color: white;">CoviDeal</a>
 			 </li>
+			 <li>
+				<!-- User profile icon !-->
+			   <div class="dropdown">
+					<button type="button" class="navbar-brand btn btn-dark dropdown-toggle" data-toggle="dropdown">
+					   <a class="navbar-brand" href="javascript:void(0);">
+					   <i class="fa fa-fw fa-user-circle" onclick="dropdown(this)" ></i>
+					   Hi, <?php echo $_SESSION["username"]; ?>
+					   </a>
+				   </button>
+				   <!-- Dropdown options !-->
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
+						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
+						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+					</div>
+				</div>
+		</li>
          <li class="nav-item pill-2">
              <a class="nav-link active" href="FindPatient.php" style ="color:white">Record New Test</a>
          </li>
@@ -78,10 +95,6 @@ Student ID: B1802197
 	  <h1 class="display-4">View Test</h1>
 	  <hr class="my-4">
 	</div>	
-	<hr>
-	 <div class="row align-items-center">
-		
-	 </div>
 	 </hr>
 	<div class="form-group">
 		<div class="col-lg-12">
@@ -123,7 +136,8 @@ Student ID: B1802197
 				  <th class="text-center">Status</th>
 				  <th class="text-center">PatientID</th>
 				  <th class="text-center">Kit ID</th>
-				  <th></th>
+				  <th class="text-center">Patient Name</th>
+				  <th class="text-center">Tester Name</th>
 				</tr>
 			  </thead>
 			  <tbody>
@@ -139,6 +153,8 @@ Student ID: B1802197
 				  <td align="center"><?php echo $row['status'];?></td>
 				  <td align="center"><?php echo $row['id'];?></td>
 				  <td align="center"><?php echo $row['kitID'];?></td>
+				  <td align="center"><?php echo $row['patientName'];?></td>
+				  <td align="center"><?php echo $row['testerName'];?></td>
 				  <td align="middle"></td>
 				</tr>				
 			  <?php endwhile?>

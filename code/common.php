@@ -25,7 +25,6 @@ if(isset($_POST['action_name'])) {
 	
 	// determine which form
 	switch ($_POST['action_name']) {
-		
 		// login function
 		case 'login':
 			login();
@@ -376,7 +375,7 @@ function updatePatient()
 		$id = $_POST['id'];
 		$kitID=$_POST['kitID'];
 		$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
-								." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
+								." values (curdate(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
 		
 		
 		//send testid to next page
@@ -485,7 +484,7 @@ function recordPatient(){
 			}
 			else {
 				$create_test_id_sql = "insert into test (`testDate`, `result`,`resultDate`, `status`, `id`, `kitID`,`patientName`,`testerName`) "
-										." values (now(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
+										." values (curdate(), 'pending', 'pending', 'pending', '" . $id . "', '" .$kitID. "','" .$name. "','" .$_SESSION['user_name']. "') ";
 				
 				//send testid to next page
 				$new_test_id = db_insert($create_test_id_sql);

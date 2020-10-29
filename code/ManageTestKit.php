@@ -200,7 +200,7 @@ Student ID: B1900083
 					  class="btn btn-primary"> Update </button>
 					  </td>
 					</tr>				
-				  
+				 </form>
 				  <!-- Update Test Kit Stock Modal !-->
 				<form action="common.php" method="POST">
 					<div class="modal fade" id="updateTestKitModal<?php echo $row['kitID'];?>"
@@ -244,7 +244,6 @@ Student ID: B1900083
 				</form>
 				<?php endwhile;?>
 				</tbody>
-			  </form>
 			</table>
 			<?php } ?>
 				<br><br>
