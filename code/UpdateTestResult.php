@@ -217,8 +217,9 @@ Student ID: B1900083
 										
 										<label for="result" class="col-sm-6 col-lg-4 col-form-label"> Result </label> 
 										<div class="col-sm-12 col-lg-8"> 
-											<select name="result" class="form-control">
-												<option selected disabled> Choose Result </option>
+
+											<select name="result" class="form-control" required>
+												<option value="" selected disabled> Choose Result </option>
 												<option value="negative">Negative</option> 
 												<option value="positive">Positive</option> 
 											</select><br>
