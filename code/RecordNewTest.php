@@ -11,7 +11,7 @@ Student ID: B1802197
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/RecordNewTest.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/NewTest.css" type="text/css" media="screen">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <title>CoviDeal - The Covid-19 Test Information System</title>
 	
@@ -40,6 +40,7 @@ Student ID: B1802197
 		  }
 		}
 	</script>
+	
   </head>
 
  <body>
@@ -90,20 +91,15 @@ Student ID: B1802197
 	
    <!-- Body !-->
    <!-- container !-->
-  <div class = "container" id = "box">
-	<div>
-	  <h1 class="display-4">View Test</h1>
-	  <hr class="my-4">
-	</div>	
-	 </hr>
-	<div class="form-group">
-		<div class="col-lg-12">
-			<?php
-			if (isset($_SESSION['error'])) {
-				echo $_SESSION['error'];
-				unset($_SESSION['error']);} ?>
-		</div>
-	</div>
+   <br>
+  <div class = "container">
+		<div class="row" id="box">
+			<div class="col-lg-12">
+				<div class="jumbotron"><br><br><br>
+				  <h1 class="display-4">Record New Test</h1><br><br><br>
+				</div>
+			</div>
+		</div>	
 	<!-- display the list of test kit !-->
 	<?php
 	//connect to mysql
@@ -162,7 +158,7 @@ Student ID: B1802197
 		</table>
 		<div class="modal-footer">
 			<input type="submit" class="btn btn-primary" name="Done" value="Done">
-		</div>
+		</div><br><br><br><br>
 		</form>
 	</div>
 	<br><br>

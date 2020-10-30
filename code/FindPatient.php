@@ -145,7 +145,7 @@ Student ID: B1900083
 		//use table
 		$userTable = "use user";
 		$conn->query($userTable);
-	    $sql = "select user.*, test.status as test_status from user left join test on (user.id = test.id) where user .position = 'patient'";
+	    $sql = "select user.*, test.status as test_status from user left join test on (user.id = test.id and test.status='pending') where user .position = 'patient' order by user.id";
 		
 		//testkit table
 		$check = new mysqli("localhost","root","", "covideal");
@@ -155,7 +155,7 @@ Student ID: B1900083
 		
 		$testkitTable="use testkit";
 		$check->query($testkitTable);
-		$test="SELECT kitid,testname FROM testkit where availableStock > 0 AND centreID='".$_SESSION['centreID']."'";
+		$test="SELECT kitid,testname FROM testkit where availableStock > 0 AND centreID='".$_SESSION["centreID"]."'";
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));

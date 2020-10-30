@@ -62,6 +62,8 @@ Student ID: B1900083
 						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
 						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
 						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
 					</div>
 				</div>
 		</li>
@@ -127,7 +129,7 @@ Student ID: B1900083
 			}
 			// select all done test which kitID is match with the current centre's test kit kitID and also match with current tester
 			// this also meaning list all the test in this centre
-			$sql = "SELECT * FROM test where  (status = 'complete') AND(testDate=CURDATE()) AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
+			$sql = "SELECT * FROM test where  (status = 'complete') AND(resultDate=CURDATE()) AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
 			$result = mysqli_query($conn, $sql);
 			
 			//fetch the data into while loop
