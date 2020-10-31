@@ -130,7 +130,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Tester Name</th>
+					  <th class="text-center">Administered By</th>
 					</tr>
 				  </thead>
 				  <tbody>
