@@ -40,7 +40,6 @@ Student ID: B1802197
 		  }
 		}
 	</script>
-	
 	<style>
 		.dropdown-toggle {
 			padding-top: 0px;
@@ -48,7 +47,6 @@ Student ID: B1802197
 		}		
 	
 	</style>
-	
   </head>
 
  <body>
