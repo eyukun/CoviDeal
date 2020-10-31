@@ -40,7 +40,13 @@ Student ID: B1802197
 		  }
 		}
 	</script>
+	<style>
+		.dropdown-toggle {
+			padding-top: 0px;
+			padding-bottom: 0px;
+		}		
 	
+	</style>
   </head>
 
  <body>
@@ -69,6 +75,8 @@ Student ID: B1802197
 						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
 						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
 						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
 					</div>
 				</div>
 		</li>
