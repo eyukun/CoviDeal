@@ -62,6 +62,8 @@ Student ID: B1900083
 						<a class="dropdown-item" href="#"> Username: <?php echo $_SESSION["username"]; ?> </a>
 						<a class="dropdown-item" href="#"> Position: <?php echo $_SESSION["position"]; ?> </a>
 						<a class="dropdown-item" href="#"> Name: <?php echo $_SESSION["user_name"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre ID: <?php echo $_SESSION["centreID"]; ?> </a>
+						<a class="dropdown-item" href="#"> Centre Name: <?php echo $_SESSION["centreName"]; ?> </a>
 					</div>
 				</div>
 		</li>
@@ -86,7 +88,19 @@ Student ID: B1900083
 				<div class="jumbotron">
 				<br><br><br><br><br>
 				  <h1 class="display-4">Generate Test Report</h1>
-				<br><br><br><br><br>
+				   <hr class="my-4">
+				  <p style="font-size:40px;"> 
+					Centre Name:
+					<?php
+						echo $_SESSION["centreName"];
+					?>
+					<br>
+					Centre Owner:
+					<?php
+						echo $_SESSION["centreOwner"];
+					?>
+				  </p><br>
+				<br><br><br>
 				</div>
 			</div>
 		</div>	
