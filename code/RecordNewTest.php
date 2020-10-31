@@ -100,6 +100,9 @@ Student ID: B1802197
 				</div>
 			</div>
 		</div>	
+		
+	<div class="col-lg-12">
+		<div id="box">
 	<!-- display the list of test kit !-->
 	<?php
 	//connect to mysql
@@ -160,6 +163,8 @@ Student ID: B1802197
 			<input type="submit" class="btn btn-primary" name="Done" value="Done">
 		</div><br><br><br><br>
 		</form>
+		</div>
+	  </div>
 	</div>
 	<br><br>
    <!-- footer !-->
