@@ -495,7 +495,7 @@ function recordPatient(){
 				
 				$error = '<div class="alert alert-success alert-dismissible fade show">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>New Test has been added successfully!</strong></div>';
+					<strong>New Test ('.$new_test_id.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 			}

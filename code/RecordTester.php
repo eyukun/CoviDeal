@@ -111,14 +111,14 @@ Student ID: B1802197
 					  <h1 class="display-4">Record Tester</h1>
 					  <hr class="my-4">
 					  <!-- error message here !-->
-		<div class="form-group">
-			<div class="col-lg-12">
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo $_SESSION['error'];
-					unset($_SESSION['error']);} ?>
-			</div>
-		</div>
+							<div class="form-group">
+								<div class="col-lg-12">
+									<?php
+									if (isset($_SESSION['error'])) {
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);} ?>
+								</div>
+							</div>
 					  <p style="font-size:20px;"> To Record A New Tester</p><br>
 						<p class="lead">
 						  <!-- register button to register a new test kit !-->

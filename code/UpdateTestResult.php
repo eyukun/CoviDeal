@@ -90,6 +90,17 @@ Student ID: B1900083
 				<div class="jumbotron">
 				  <h1 class="display-4">Update Test Result</h1>
 				  <hr class="my-4">
+				  		 <!--error message!-->
+					<div class="form-group">
+						<div class="form-group">
+							<div class="col-lg-12">
+							<?php
+							if (isset($_SESSION['error'])) {
+								echo $_SESSION['error'];
+								unset($_SESSION['error']);} ?>
+							</div>
+						</div>
+					</div>
 				  <p style="font-size:20px;"> Update the test result of a patient</p><br>
 				</div>
 			</div>

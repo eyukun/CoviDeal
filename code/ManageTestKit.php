@@ -111,6 +111,15 @@ Student ID: B1900083
 					<div class="jumbotron">
 					  <h1 class="display-4">Manage Test Kit Stock</h1>
 					  <hr class="my-4">
+					   <!-- error message here !-->
+							<div class="form-group">
+								<div class="col-lg-12">
+									<?php
+									if (isset($_SESSION['error'])) {
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);} ?>
+								</div>
+							</div>
 					  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
 						<p class="lead">
 						  <!-- register button to register a new test kit !-->
@@ -121,16 +130,6 @@ Student ID: B1900083
 				</div>
 			</div>	
 		 <hr>
-		 
-		 <!-- error message here !-->
-		<div class="form-group">
-			<div class="col-lg-12">
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo $_SESSION['error'];
-					unset($_SESSION['error']);} ?>
-			</div>
-		</div>
 		<br>
 		
 	<div class="col-lg-12">
