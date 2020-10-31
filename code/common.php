@@ -90,6 +90,10 @@ function login() {
 			$sql1 = "SELECT * FROM testcentre where centreID = '". $_SESSION['centreID']."'";
 			$centre = db_find($sql1);
 			$_SESSION['centreName'] = $centre->centreName;
+			
+			$sql2 = "SELECt * FROM user where id = (SELECT id FROM testcentre where centreID = '".$_SESSION['centreID']."')";
+			$owner = db_find($sql2);
+			$_SESSION['centreOwner'] = $owner->name;
 		}
 
 		// determine position
