@@ -95,18 +95,6 @@ Student ID: B1900083
 			</div>
 		</div>	
 	<hr>
-	
-		 <!--error message!-->
-		<div class="form-group">
-			<div class="form-group">
-				<div class="col-lg-12">
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo $_SESSION['error'];
-					unset($_SESSION['error']);} ?>
-				</div>
-			</div>
-		</div>
 		<br>
 	 
    	<div class="col-lg-12">

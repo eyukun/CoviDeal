@@ -84,25 +84,14 @@ Student ID: B1900083
 		<div class="row" id="box">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-				  <h1 class="display-4">View Test Result</h1>
+				  <h1 class="display-4">View Testing History</h1>
 				  <hr class="my-4">
-				  <p style="font-size:20px;"> The Test Result is completed and displayed in a table </p><br>
+				  <p style="font-size:20px;"> The Test Result is displayed in the table </p><br>
 				</div>
 			</div>
 		</div>	
 	<hr>
 	
-		 <!--error message!-->
-		<div class="form-group">
-			<div class="form-group">
-				<div class="col-lg-12">
-					<?php
-					if (isset($_SESSION['error'])) {
-						echo $_SESSION['error'];
-						unset($_SESSION['error']);} ?>
-				</div>
-			</div>
-		</div>
 		<br>
 	 
    <div class="col-lg-12">
