@@ -141,7 +141,7 @@ Student ID: B1900083
 			}
 			// select all done test which kitID is match with the current centre's test kit kitID and also match with current tester
 			// this also meaning list all the test in this centre
-			$sql = "SELECT * FROM test where  (status = 'complete') AND(testDate=CURDATE()) AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
+			$sql = "SELECT * FROM test where  (status = 'complete') AND(resultDate=CURDATE()) AND (kitID IN (SELECT kitID FROM testkit where centreID='".$_SESSION['centreID']."'));";
 			$result = mysqli_query($conn, $sql);
 			
 			//fetch the data into while loop
