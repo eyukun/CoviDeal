@@ -192,8 +192,9 @@ Student ID: B1900083
 				</tbody>
 			  </form>
 			</table>
+			
+				<button class="btn btn-success" id="btn1" onclick="window.print()">Print Test Report</button>
 			<?php } ?>
-			<button class="btn btn-success" id="btn1" onclick="window.print()">Print Test Report</button>
 				<br><br>
 				<br>
 		   </div>  
