@@ -155,7 +155,7 @@ Student ID: B1900083
 		
 		$testkitTable="use testkit";
 		$check->query($testkitTable);
-		$test="SELECT kitid,testname FROM testkit where availableStock > 0 AND centreID='".$_SESSION["centreID"]."'";
+		$test="SELECT kitid, testkitname FROM testkit where availableStock > 0 AND centreID='".$_SESSION["centreID"]."'";
 		
 		//fetch the data into while loop
 		$resultset = mysqli_query($conn, $sql) or die("database error:". mysqli_error($conn));
@@ -163,7 +163,7 @@ Student ID: B1900083
 		
 		$testkit_row = array();
 		while($col = mysqli_fetch_assoc($resultset1)){
-			$testkit_row[$col['kitid']] = $col['testname'];
+			$testkit_row[$col['kitid']] = $col['testkitname'];
 		}
 		
 		//if material table dont have data, display the message
