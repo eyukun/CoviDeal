@@ -86,9 +86,21 @@ Student ID: B1900083
 		<div class="row" id="box">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-				<br><br><br><br><br>
+				<br><br>
 				  <h1 class="display-4">Generate Test Report</h1>
-				<br><br><br><br><br>
+				   <hr class="my-4">
+				  <p style="font-size:40px;"> 
+					Centre Name:
+					<?php
+						echo $_SESSION["centreName"];
+					?>
+					<br>
+					Centre Owner:
+					<?php
+						echo $_SESSION["centreOwner"];
+					?>
+				  </p><br>
+				<br><br>
 				</div>
 			</div>
 		</div>	
@@ -156,7 +168,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Tester Name</th>
+					  <th class="text-center">Administered By</th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -180,8 +192,9 @@ Student ID: B1900083
 				</tbody>
 			  </form>
 			</table>
+			
+				<button class="btn btn-success" id="btn1" onclick="window.print()">Print Test Report</button>
 			<?php } ?>
-			<button class="btn btn-success" onclick="window.print()">Print Test Report</button>
 				<br><br>
 				<br>
 		   </div>  

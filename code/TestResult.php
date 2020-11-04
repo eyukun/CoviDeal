@@ -95,21 +95,10 @@ Student ID: B1900083
 			</div>
 		</div>	
 	<hr>
-	
-		 <!--error message!-->
-		<div class="form-group">
-			<div class="form-group">
-				<div class="col-lg-12">
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo $_SESSION['error'];
-					unset($_SESSION['error']);} ?>
-				</div>
-			</div>
-		</div>
 		<br>
 	 
-   
+   	<div class="col-lg-12">
+		<div id="box">
    <!-- list of the updated test !-->
 		<?php
 		//connect to mysql
@@ -141,7 +130,7 @@ Student ID: B1900083
 					  <th class="text-center">Patient ID</th>
 					  <th class="text-center">Kit ID</th>
 					  <th class="text-center">Patient Name</th>
-					  <th class="text-center">Tester Name</th>
+					  <th class="text-center">Administered By</th>
 					</tr>
 				  </thead>
 				  <tbody>
@@ -174,6 +163,8 @@ Student ID: B1900083
 			
 			</div>
 		</div>
+	  </div>
+	</div>
 		<br><br><br><br>
    <!-- footer !-->
     <footer class="site-footer">

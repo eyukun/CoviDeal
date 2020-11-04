@@ -112,6 +112,15 @@ Student ID: B1900083
 				<div class="jumbotron">
 				  <h1 class="display-4">Register Test Centre</h1>
 				  <hr class="my-4">
+				  <!-- error message here !-->
+					<div class="form-group">
+						<div class="col-lg-12">
+							<?php
+							if (isset($_SESSION['error'])) {
+								echo $_SESSION['error'];
+								unset($_SESSION['error']);} ?>
+						</div>
+					</div>
 				  <p style="font-size:20px;"> Register a test centre with approved name and set up for it</p><br>
 				  <p class="lead">
 				  <!-- register button !-->
@@ -123,16 +132,7 @@ Student ID: B1900083
 					>Register Test Centre</button>
 				  </p>
 				</div>
-			<hr>
-			<!-- error message here !-->
-			<div class="form-group">
-				<div class="col-lg-12">
-					<?php
-					if (isset($_SESSION['error'])) {
-						echo $_SESSION['error'];
-						unset($_SESSION['error']);} ?>
-				</div>
-			</div>
+			
 			<br><br><br><br><br><br><br>
 		 
 			 <!-- Register Test Centre Modal !-->

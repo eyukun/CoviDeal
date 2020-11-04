@@ -25,7 +25,6 @@ if(isset($_POST['action_name'])) {
 	
 	// determine which form
 	switch ($_POST['action_name']) {
-		
 		// login function
 		case 'login':
 			login();
@@ -41,9 +40,9 @@ if(isset($_POST['action_name'])) {
 			updateTestKit();
 			break;
 			
-		// register test kit function
-		case 'registerTestKit':
-			registerTestKit();
+		// add test kit function
+		case 'addTestKit':
+			addTestKit();
 			break;
 		case'recordPatient':
 			recordPatient();
@@ -91,6 +90,10 @@ function login() {
 			$sql1 = "SELECT * FROM testcentre where centreID = '". $_SESSION['centreID']."'";
 			$centre = db_find($sql1);
 			$_SESSION['centreName'] = $centre->centreName;
+			
+			$sql2 = "SELECt * FROM user where id = (SELECT id FROM testcentre where centreID = '".$_SESSION['centreID']."')";
+			$owner = db_find($sql2);
+			$_SESSION['centreOwner'] = $owner->name;
 		}
 
 		// determine position
@@ -264,7 +267,7 @@ function updateTestKit(){
 	
 	// get kitID from update form
 	$kitID = $_POST['kitID'];
-	$testName = $_POST['testName'];
+	$testKitName = $_POST['testKitName'];
 	$sql = "SELECT * FROM testkit WHERE kitID='$kitID' AND centreID='".$_SESSION['centreID']."'" ;
 	$testkit = db_find($sql);
 	
@@ -273,7 +276,7 @@ function updateTestKit(){
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Error occurs! ' . $testName . ' (Test Kit) is not found.</strong></div>';
+		<strong>Error occurs! ' . $testKitName . ' (Test Kit) is not found.</strong></div>';
 		$_SESSION['error'] = $error;
 		echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 	}
@@ -290,7 +293,7 @@ function updateTestKit(){
 		if ($testkit != null){
 			$error = '<div class="alert alert-success alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Test Kit ('.$testName.') Stock has been updated successfully!</strong></div>';
+			<strong>Test Kit ('.$testKitName.') Stock has been updated successfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";											
 		}
@@ -298,21 +301,21 @@ function updateTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit ('.$testName.') updated unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testKitName.') updated unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/ManageTestKit.php'; </script>";
 		}
 	}
 }
 
-// register test kit function
-function registerTestKit(){
+// add test kit function
+function addTestKit(){
 
-	// get information from form to register a new test kit
-	$testName = $_POST['testName'];
+	// get information from form to add a new test kit
+	$testKitName = $_POST['testKitName'];
 	$availableStock = $_POST['stock'];
 	$centreID = $_SESSION["centreID"];
-	$sql = "SELECT * FROM testkit WHERE testName='$testName' AND centreID='$centreID'";
+	$sql = "SELECT * FROM testkit WHERE testkitname='$testKitName' AND centreID='$centreID'";
 	$testkit = db_find($sql);
 
 
@@ -321,20 +324,20 @@ function registerTestKit(){
 	{
 		$error = '<div class="alert alert-danger alert-dismissible fade show">
 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Cannot add! ' . $testName . ' (Test Kit) has already existed.</strong></div>';
+		<strong>Cannot add! ' . $testKitName . ' (Test Kit) has already existed.</strong></div>';
 		$_SESSION['error'] = $error;
 		echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 	}
 	// new test kit
 	else{
 		//add the test kit
-		$insert = "insert into testkit(testName, availableStock, centreID) values ('$testName', '$availableStock', '$centreID');";
+		$insert = "insert into testkit(testKitName, availableStock, centreID) values ('$testKitName', '$availableStock', '$centreID');";
 		$testkit = db_result($insert);
 		// register success
 		if ($testkit == true){
 				$error = '<div class="alert alert-success alert-dismissible fade show">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>New test kit ('.$testName.') has been added successfully!</strong></div>';
+				<strong>New test kit ('.$testKitName.') has been added successfully!</strong></div>';
 				$_SESSION['error'] = $error;
 				echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -342,7 +345,7 @@ function registerTestKit(){
 		else {
 			$error = '<div class="alert alert-danger alert-dismissible fade show">
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong> Test Kit ('.$testName.') added unsuccessfully!</strong></div>';
+			<strong> Test Kit ('.$testKitName.') added unsuccessfully!</strong></div>';
 			$_SESSION['error'] = $error;
 			echo "<script type='text/javascript'> window.location = '/code/manageTestKit.php'; </script>";
 		}
@@ -492,7 +495,7 @@ function recordPatient(){
 				
 				$error = '<div class="alert alert-success alert-dismissible fade show">
 					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>New Test has been added successfully!</strong></div>';
+					<strong>New Test ('.$new_test_id.') has been added successfully!</strong></div>';
 					$_SESSION['error'] = $error;
 					echo "<script type='text/javascript'> window.location = '/code/RecordNewTest.php?test_id=".$new_test_id."'; </script>";
 			}

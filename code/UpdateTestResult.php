@@ -90,6 +90,17 @@ Student ID: B1900083
 				<div class="jumbotron">
 				  <h1 class="display-4">Update Test Result</h1>
 				  <hr class="my-4">
+				  		 <!--error message!-->
+					<div class="form-group">
+						<div class="form-group">
+							<div class="col-lg-12">
+							<?php
+							if (isset($_SESSION['error'])) {
+								echo $_SESSION['error'];
+								unset($_SESSION['error']);} ?>
+							</div>
+						</div>
+					</div>
 				  <p style="font-size:20px;"> Update the test result of a patient</p><br>
 				</div>
 			</div>
@@ -189,7 +200,7 @@ Student ID: B1900083
 					  class="btn btn-primary"> Update </button>
 					  </td>
 					</tr>				
-				  
+				</form>
 				  <!-- Update Test Result Modal !-->
 				<form action="common.php" method="POST">
 					<div class="modal fade" id="updateTestModal<?php echo $row['testID'];?>"
@@ -217,10 +228,11 @@ Student ID: B1900083
 										
 										<label for="result" class="col-sm-6 col-lg-4 col-form-label"> Result </label> 
 										<div class="col-sm-12 col-lg-8"> 
-											<select name="result" class="form-control">
-												<option selected disabled> Choose Result </option>
-												<option value="Negative">Negative</option> 
-												<option value="Positive">Positive</option> 
+
+											<select name="result" class="form-control" required>
+												<option value="" selected disabled> Choose Result </option>
+												<option value="negative">Negative</option> 
+												<option value="positive">Positive</option> 
 											</select><br>
 										</div> 
 										
@@ -266,7 +278,6 @@ Student ID: B1900083
 				</form>
 				<?php endwhile;?>
 				</tbody>
-			  </form>
 			</table>
 			<?php } ?>
 			

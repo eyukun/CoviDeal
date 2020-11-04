@@ -111,26 +111,25 @@ Student ID: B1900083
 					<div class="jumbotron">
 					  <h1 class="display-4">Manage Test Kit Stock</h1>
 					  <hr class="my-4">
-					  <p style="font-size:20px;"> Manage or register a test kit with the arrived test kit</p><br>
+					   <!-- error message here !-->
+							<div class="form-group">
+								<div class="col-lg-12">
+									<?php
+									if (isset($_SESSION['error'])) {
+										echo $_SESSION['error'];
+										unset($_SESSION['error']);} ?>
+								</div>
+							</div>
+					  <p style="font-size:20px;"> Manage or add a test kit with the arrived test kit</p><br>
 						<p class="lead">
-						  <!-- register button to register a new test kit !-->
+						  <!-- add button to add a new test kit !-->
 						  <button id="btn1" type="button" class="btn btn-success" data-toggle="modal"
-						  data-target="#registerTestKitModal"> Register </button>
+						  data-target="#addTestKitModal"> Add </button>
 						</p>
 					 </div>
 				</div>
 			</div>	
 		 <hr>
-		 
-		 <!-- error message here !-->
-		<div class="form-group">
-			<div class="col-lg-12">
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo $_SESSION['error'];
-					unset($_SESSION['error']);} ?>
-			</div>
-		</div>
 		<br>
 		
 	<div class="col-lg-12">
@@ -143,7 +142,7 @@ Student ID: B1900083
 						style="margin-right: 6px;"></i>
 				   <input class="form-control" style="width: 400px;"
 				   id="filter" type="text"
-				   placeholder="Search by Test Name" onkeyup="searchTestKit()">
+				   placeholder="Search by Test Kit Name" onkeyup="searchTestKit()">
 				 </form>	
 			 </div>
 			</div>
@@ -177,7 +176,7 @@ Student ID: B1900083
 				  <thead>
 					<tr class="thead-dark">
 					  <th class="text-center">KitID</th>
-					  <th class="text-center">Test_Name</th>
+					  <th class="text-center">Test_Kit_Name</th>
 					  <th class="text-center">Available_Stock</th>
 					  <th class="text-center">CentreID</th>
 					  <th></th>
@@ -190,7 +189,7 @@ Student ID: B1900083
 				  ?>
 					<tr>
 					  <td align="center"><?php echo $row['kitID'];?></td>
-					  <td align="center"><?php echo $row['testName'];?></td>
+					  <td align="center"><?php echo $row['testKitName'];?></td>
 					  <td align="center"><?php echo $row['availableStock'];?></td>
 					  <td align="center"><?php echo $row['centreID'];?></td>
 					  <td align="middle">
@@ -200,7 +199,7 @@ Student ID: B1900083
 					  class="btn btn-primary"> Update </button>
 					  </td>
 					</tr>				
-				  
+				 </form>
 				  <!-- Update Test Kit Stock Modal !-->
 				<form action="common.php" method="POST">
 					<div class="modal fade" id="updateTestKitModal<?php echo $row['kitID'];?>"
@@ -221,9 +220,9 @@ Student ID: B1900083
 											<input type="text" class="form-control" name="kitID" value="<?php echo $row['kitID'];?>" readonly><br>
 										</div>
 									
-										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name </label>
+										<label for="testKitName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name </label>
 										<div class="col-sm-12 col-lg-8">
-											<input type="text" class="form-control" name="testName" value="<?php echo $row['testName'];?>" readonly><br>
+											<input type="text" class="form-control" name="testKitName" value="<?php echo $row['testKitName'];?>" readonly><br>
 										</div>
 									
 										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
@@ -244,7 +243,6 @@ Student ID: B1900083
 				</form>
 				<?php endwhile;?>
 				</tbody>
-			  </form>
 			</table>
 			<?php } ?>
 				<br><br>
@@ -256,13 +254,13 @@ Student ID: B1900083
 		</div>
 		<br><br><br><br>
 		
-		<!-- Register Test Kit Modal !-->
+		<!-- Add Test Kit Modal !-->
 				<form action="common.php" method="POST" class="needs-validation" novalidate>
-					<div class="modal fade" id="registerTestKitModal" tabindex="-1" role="dialog">
+					<div class="modal fade" id="addTestKitModal" tabindex="-1" role="dialog">
 						<div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Register Test Kit</h5>
+									<h5 class="modal-title" id="exampleModalLongTitle">Add Test Kit</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -270,11 +268,11 @@ Student ID: B1900083
 								<!-- input values !-->
 								<div class="modal-body">
 									<div class="form-group row">
-										<label for="testName" class="col-sm-6 col-lg-4 col-form-label"> Test Name</label>
+										<label for="testKitName" class="col-sm-6 col-lg-4 col-form-label"> Test Kit Name</label>
 										<div class="col-sm-12 col-lg-8">
 											<input type="text" pattern="^.*[a-zA-Z]+.*"
-											class="form-control" name="testName" required>
-											<div class="invalid-feedback">Please enter a test name contains at least one letter.</div><br>
+											class="form-control" name="testKitName" required>
+											<div class="invalid-feedback">Please enter a test kit name contains at least one letter.</div><br>
 										</div>
 							
 										<label for="Income Stock" class="col-sm-6 col-lg-4 col-form-label"> Income Stock </label>
@@ -285,10 +283,10 @@ Student ID: B1900083
 										</div>
 									</div>
 								</div>
-								<!-- register button !-->
+								<!-- Add button !-->
 								<div class="modal-footer">
-									<input name="action_name" value="registerTestKit" hidden>
-									<input type="submit" class="btn btn-primary" name="submit" value="Register">
+									<input name="action_name" value="addTestKit" hidden>
+									<input type="submit" class="btn btn-primary" name="submit" value="Add">
 								</div>
 							</div>
 						</div>
