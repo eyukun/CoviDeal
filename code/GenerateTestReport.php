@@ -86,7 +86,7 @@ Student ID: B1900083
 		<div class="row" id="box">
 			<div class="col-lg-12">
 				<div class="jumbotron">
-				<br><br><br><br><br>
+				<br><br>
 				  <h1 class="display-4">Generate Test Report</h1>
 				   <hr class="my-4">
 				  <p style="font-size:40px;"> 
@@ -100,7 +100,7 @@ Student ID: B1900083
 						echo $_SESSION["centreOwner"];
 					?>
 				  </p><br>
-				<br><br><br>
+				<br><br>
 				</div>
 			</div>
 		</div>	
