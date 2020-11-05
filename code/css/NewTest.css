@@ -1,10 +1,11 @@
 /**
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 **/
+
 /** Body **/
 .jumbotron {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../images/test.jpg');
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('../images/updateTest.png');
 	background-size: cover;
 	color: white;
 }
@@ -25,7 +26,7 @@ h3 {
 }
 
 .table {
-	width: 106%;
+	width: 100%;
 	height: 30%;
 	display: block;
 	margin-left: auto;
@@ -236,6 +237,6 @@ td, th{
   
 }
 /**
-Student Name: Ng Jun Zhi
-Student ID: B1802197
+Student Name: Eyu Kun
+Student ID: B1900083
 **/
