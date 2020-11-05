@@ -196,7 +196,7 @@ Student ID: B1900083
 				<button class="btn btn-success" id="btn1" onclick="window.print()">Print Test Report</button>
 			<?php } ?>
 				<br><br>
-				<br>
+				<br><br><br>
 		   </div>  
 			
 			
